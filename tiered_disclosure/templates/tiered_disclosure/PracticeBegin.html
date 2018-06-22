@@ -1,0 +1,24 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Practice Rounds
+{% endblock %}
+
+{% block content %}
+<table class="centerer"><tbody><tr><td>
+        <div class="content_thin">
+        	<p>We will now go through {{ practicerounds }} practice rounds to help you understand the game.</p>
+
+            <p>
+        		 You will not be paid for your performance in these rounds.
+            </p>
+
+        </div>  
+    </td></tr></tbody></table>
+    <nav>
+        <button class="a-btn next">Next</button>
+    </nav>
+
+
+{% endblock %}

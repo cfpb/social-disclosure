@@ -1,0 +1,137 @@
+/**
+* Wordfind.js 0.0.1
+* (c) 2012 Bill, BunKat LLC.
+* Wordfind is freely distributable under the MIT license.
+* For all details and documentation:
+*     http://github.com/bunkat/wordfind
+*/
+
+p {
+  font: 22pt sans-serif;
+  margin: 20px 20px 0px 20px;
+}
+
+/**
+* Styles for the puzzle
+*/
+#puzzle {
+  border: 1px solid black;
+  padding: 20px;
+  float: left;
+  margin: 30px 20px;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+#puzzle div {
+  width: 100%;
+  margin: 0 auto;
+}
+#nextpuzzle{
+  float: left;
+  position: relative;
+  width: 192px;
+  margin: 0 0 25px 20px;
+  padding: 10px 0;
+  clear: both;
+  display: none;
+}
+/* style for each square in the puzzle */
+#puzzle .puzzleSquare {
+  height: 40px;
+  width: 40px;
+  text-transform: uppercase;
+  background-color: white;
+  border: 0;
+  font: 1.5em sans-serif;
+  display:inline;
+  float:left;
+  position:relative;
+  cursor: pointer;
+  text-align: center;
+  padding: 12px 0 0;
+}
+
+#puzzle .puzzleSquare:focus {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+/* indicates when a square has been selected */
+#puzzle .selected {
+  background-color: orange;
+}
+
+/* indicates that the square is part of a word that has been found */ 
+#puzzle .found {
+  /*background-color: blue;*/
+  /*color: white;*/
+}
+#puzzle .found .cover{
+  background-color:blue;
+  height: 100%;
+  width: 100%;
+  position:absolute;
+  left:0;
+  top:0;
+  opacity:.2;
+}
+
+#puzzle .solved {
+  background-color: purple;
+  color: white;
+}
+
+/* indicates that all words have been found */
+#puzzle .complete {
+  background-color: lightgoldenrodyellow;
+}
+
+/**
+* Styles for the word list
+*/
+#words {
+  padding-top: 20px;
+  -moz-column-count: 2;
+  -moz-column-gap: 20px;
+  -webkit-column-count: 2;
+  -webkit-column-gap: 20px;
+  column-count: 2;
+  column-gap: 20px;
+  min-width: 250px;
+}
+
+#words ul {
+  list-style-type: none;
+  height: 580px;
+  padding: 32px 0 0 30px;
+}
+
+#words li {
+  padding: 6px 0;
+  font: 1.3em sans-serif;
+}
+
+/* indicates that the word has been found */
+#words .wordFound {
+  text-decoration: line-through;
+  color: gray;
+}
+
+/**
+* Styles for the button
+*/
+#solve {
+  margin: 0 30px;
+}

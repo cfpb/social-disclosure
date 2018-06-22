@@ -1,0 +1,49 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+{% load otree static %}
+{% block title %}
+    Experiment Basics
+{% endblock %}
+
+{% block content %}
+
+    <table class="centerer"><tbody><tr><td>
+        <div class="content_thin">
+        	<div class="quiz_js">
+                <div class="question">
+                    <h3>True or False: The more tokens you earn in the experiment, the more cash you will be paid at the end.</h3>
+                    <div class="controls">
+                        <ul>
+                            <li>
+                                <label for="q1_1">
+                                    <input type="radio" name="basics_q1" value="True" id="q1_1" data-correct="true">
+                                    True
+                                </label>
+                            </li>
+                            <li>
+                                <label for="q1_2"><input type="radio" name="basics_q1" value="False" id="q1_2">
+                                    False
+                                </label>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="answer">
+                    <h2 class="correct">Correct!</h2>
+                    <h2 class="incorrect">The correct answer is: True.</h2>
+                    <p>Remember, we will pay you $1 for every {{ tokens_per_dollar }} tokens you earn during the experiment</p>
+                </div>
+            </div>
+        </div></td></tr></tbody></table>
+	<nav>
+        <input type="button" class="a-btn next" value="Next"></input>
+    </nav>
+
+{% endblock %}
+{% block app_styles %}
+   <link href="{% static "tiered_disclosure/quiz.css" %}" rel="stylesheet">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'tiered_disclosure/quiz.js' %}"></script>
+{% endblock %}
