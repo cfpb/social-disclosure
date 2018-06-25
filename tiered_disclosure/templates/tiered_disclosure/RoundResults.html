@@ -1,0 +1,26 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+        Round Results
+{% endblock %}
+
+{% block content %}
+    {% if Constants.show_results_timer %}
+        <div id = "timer">
+            <label>Time Remaining:</label>
+            <input type = "text" disabled = "disabled"
+                value = "{{ Constants.results_timer }}">
+            </input>
+        </div>
+    {% endif %}
+    {% include "tiered_disclosure/parts/roundResultPart.html" %}
+    <nav>
+        <button class="a-btn next">Next</button>
+        <input type="submit"></input>
+    </nav>
+{% endblock %}
+{% block app_styles %}
+   <link href="{% static "tiered_disclosure/results.css" %}" rel="stylesheet">
+   
+{% endblock %}
