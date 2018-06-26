@@ -34,7 +34,6 @@ class Constants(BaseConstants):
     asl_flag = [0,0]
     practicerounds = [True, False]
     num_rounds_treatment = [4,4]
-
     ##############################################
 
    
@@ -97,7 +96,7 @@ class Subsession(BaseSubsession):
         asl = [Constants.asl_flag[i] for i in treatmentorder]
         practicerounds = Constants.practicerounds
         num_rounds_treatment = [Constants.num_rounds_treatment[i] for i in treatmentorder]
-        num_rounds_practice = Constants.num_rounds_practice
+        num_rounds_practice = [Constants.num_rounds_practice[i] for i in treatmentorder]
         new_block_rounds = [sum(num_rounds_treatment[:i]) + sum(num_rounds_practice[:i]) + 1 for i in range(len(num_rounds_treatment) + 1)]
          # practice rounds
         practice_rounds = [new_block_rounds[i] + j for i in range(len(new_block_rounds) - 1) for j in range(num_rounds_practice[i])]
