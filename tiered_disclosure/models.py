@@ -2,7 +2,7 @@ from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
 )
-import numpy as np, math, random, copy
+import math, random, copy
 from otree.db.models import Model, ForeignKey
 
 author = 'Dustin Beckett, Daniel Banko'
@@ -154,19 +154,32 @@ class Subsession(BaseSubsession):
         self.products = num_products[self.block - 1]
         self.is_asl = asl[self.block - 1]
 
-
         self.session.vars["products_round" + str(self.round_number)] = []
         product_dims = []
         for i in range(self.products):
             product_dims.append(set_productdims(self.productdims_total)["productdims"]) 
-
         self.session.vars["products_round" + str(self.round_number)] = product_dims
 
         self.session.vars["preferences_round" + str(self.round_number)] = []
         preference_dims = []
-        preference_dims.append(set_prefdims(self.preferences)["prefdims"]) 
+        for i in range(self.preferences):
+            preference_dims.append(set_prefdims(self.preferences)["prefdims"]) 
         self.session.vars["preferences_round" + str(self.round_number)] = preference_dims
-        
+     
+    #version 1 of function to not show hidden dimensions:
+        productdims_shown = []
+        for j in range(self.products):
+            truncatedvals = [0]*(self.productdims_shown)
+            for i in range(self.productdims_shown):
+                tval = -1
+                tval = product_dims[j][i]
+                truncatedvals[i] = tval
+                print("truncatedvals[i] is", truncatedvals[i])
+            truncvalues = copy.copy(truncatedvals)
+            productdims_shown.append(truncvalues)
+
+        self.session.vars["products_shown_round" + str(self.round_number)] = productdims_shown
+
 class Player(BasePlayer):
     bool_best_prod = models.IntegerField(doc="1 if the participant selected optimal product")
     best_product = models.IntegerField(doc="ID of product maximizes utility for participant")
@@ -210,12 +223,12 @@ def set_productdims(numdims):
     rawvals = [0]*numdims
     for i in range(numdims):
         val = -1
-        val = round(random.random(),2)
+        val = round(random.random(),2) #halton draws?
         rawvals[i] = val
-    
-    dvalues = copy.copy(rawvals)
 
+    dvalues = copy.copy(rawvals)
     print('dvalues is', dvalues)
+
 
     return {
         'productdims': dvalues,
