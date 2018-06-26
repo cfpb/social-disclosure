@@ -4,19 +4,19 @@
     <table id = "products">
         <thead>
             <tr>
-                <th>Product:</th>
+                <th></th>
                 {% for i in products %}
                     <th>Product {{ i }}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
-        {% for product_dims in productdims %}
+        {% for dimensions in productdimvals_reversed%}
             <tr>
                 <td>
-                    <label> {{ productdims }}</label>
+                    <label></label>
                 </td>
-            {% for product_dim_i in product_dims %}
+            {% for product_dim_i in dimensions%}
                 <td>
                     <span>
                         {{ product_dim_i }}
