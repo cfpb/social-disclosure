@@ -6,7 +6,9 @@
     <div class="col">
         <div class="earnings_prose">
             <p>
-                This round you earned {{ player.payoff_marginal }} tokens.
+                This round you selected product {{ }} and received a benefit of {{ }} (show calculation).
+                {% if {{ product_selected }} is {{ best_product }} }
+                The product you selected was the best product given your preferences.
             </p>
                 Your earnings are itemized in the table below.
             </p>
@@ -23,10 +25,6 @@
                     <td>Total </td><td>{{ player.payoff_marginal }}tokens</td>
                 </tr>
             </tbody></table>
-<<<<<<< HEAD
-=======
-            {% else %}
->>>>>>> 3f14d5afec9b06a6abec2586ce7d12f4c0884fbd
             <table class="earnings">
                 <thead><tr>
                     <th></th>
