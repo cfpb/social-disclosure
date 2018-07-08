@@ -57,25 +57,34 @@ class ChoiceTruncation(Page):
 		return self.subsession.is_asl == 0
 
 	def vars_for_template(self):
-		product_total = Constants.num_products[self.subsession.block - 1]
+		products_total = Constants.num_products[self.subsession.block - 1]
 		productdims_total = Constants.productdims_total[self.subsession.block - 1]
 		productdims_shown = Constants.productdims_shown[self.subsession.block - 1]
 
-		productdimvals = self.session.vars["products_round" + str(self.round_number)]
-		productdimvals_shown = self.session.vars["products_shown_round" + str(self.round_number)]
-		preferencedims = self.session.vars["preferences_round" + str(self.round_number)]
+		productdimvals = self.session.vars["productdims_round" + str(self.round_number)]
+		productdimvals_shown = self.session.vars["productdims_shown_round" + str(self.round_number)]
+		productdimvals_reversed = list(map(list, zip(*productdimvals_shown)))
 
-		productdimvals_reversed= list(map(list, zip(*productdimvals_shown)))
+		preferencedims = self.session.vars["preferencedims_round" + str(self.round_number)]
+
+		products_list = list(range(1, products_total + 1))
+		productdims_list = list(range(1, productdims_shown + 1))
 
 		treatmentorder = list(map(int, self.session.config['treatmentorder'].split(',')))
 		treatmentorder = [i - 1 for i in treatmentorder]
-		
+
 		num_rounds_treatment = [Constants.num_rounds_treatment[i] for i in treatmentorder]
-		#num_rounds_practice = [Constants.num_rounds_practice[i] for i in treatmentorder]
-		numpracticerounds = sum(Constants.num_rounds_practice[:self.subsession.block])
+		num_rounds_practice = [Constants.num_rounds_practice[i] for i in treatmentorder]
+
+		numpracticerounds = sum(num_rounds_practice[:self.subsession.block])
 		numtreatrounds = sum(num_rounds_treatment[:self.subsession.block])
 		roundnum = self.subsession.round_number - numpracticerounds
-		
+
+
+
+
+
+
 		# product_dims = []
 		# if self.subsession.practiceround:
 		# 	productdims = self.participant.vars["practice_proddims" + str(self.subsession.round_number)]
@@ -84,62 +93,81 @@ class ChoiceTruncation(Page):
 		# 		product_dims.append([pd.value for pd in self.group.get_player_by_role(role).get_ask().productdim_set.all()])
 
 
-
-
-
-		products = list(range(1, product_total + 1))
-		productdims = list(range(1, productdims_shown + 1))
 		# products = list(zip(range(1, self.subsession.productdims_total + 1), zip(*product_dims)))
 		return {
-			"product_total": product_total,
-			"products": products,
-			"productdims": productdims,
-			"round": roundnum,
+			"products_total": products_total,
+			"productdims_total": productdims_total,
+			"productdims_shown": productdims_shown,
+
+
+			"products_list": products_list,
+			"productdims_list": productdims_list,
+
+			"treatmentorder": treatmentorder,
+			"treatmentrounds": Constants.num_rounds_treatment[self.subsession.block - 1],
+
 			"numpracticerounds": numpracticerounds,
 			"numtreatrounds": numtreatrounds,
+			"roundnum": roundnum,
+
 			"productdimvals": productdimvals,
-			"productdimvals_shown": productdimvals_shown, #number of products
-			"treatmentorder": list(map(int, self.session.config['treatmentorder'].split(','))),
-			"treatmentrounds": Constants.num_rounds_treatment[self.subsession.block - 1],
+			"productdimvals_shown": productdimvals_shown,  # number of product dims shown
+			"productdimvals_reversed": productdimvals_reversed,
+
 			"practicerounds": Constants.num_rounds_practice[self.subsession.block - 1],
-			"total_productdims": Constants.productdims_total[self.subsession.block - 1],
-			"productdims_shown": productdims_shown,
 			"preferencedims": preferencedims,
 			"practice_round:": self.subsession.practiceround,
-			"productdimvals_reversed": productdimvals_reversed
+
 		}
 
-class RoundResults(Page):
+	def before_next_page(self):
+		product_choice = self.get_product_by_id("Prod" + str(self.player.product_selected))
+		productdims = [pd.value for pd in ask.productdim_sell.all()]
+
+
+
+
+class TruncationRoundResults(Page):
 	def vars_for_template(self):
-		return {
-			# "products": products.
-			# "preferences": preferences
-			"product_selected": product_selected
-			# "best_product":
-			# "is_mistake":
-			# "benefit": 
-		}
-	# def before_next_page(self):
- #        """ Create bid object.  Set buyer price attributes """
- #        # if self.subsession.practiceround:
- #        #     self.participant.vars["practice_bids" + str(self.subsession.round_number)] = [[0] * self.subsession.sellers for i in range(self.subsession.buyers)]
- #        #     self.participant.vars["practice_bids" + str(self.subsession.round_number)][0][self.player.contract_seller_rolenum - 1] = 1
- #        #     for sellers in self.participant.vars["practice_bids" + str(self.subsession.round_number)]:
- #        #         if sum(sellers) == 0:
- #        #             sellers[random.randint(1, self.subsession.sellers) - 1] = 1
- #        #     buyer_choices = self.participant.vars["practice_bids" + str(self.subsession.round_number)]
- #        #     items_sold = list(map(sum, zip(*buyer_choices)))[0]
- #        #     price = sum(self.participant.vars["practice_asks" + str(self.subsession.round_number)][self.player.contract_seller_rolenum - 1])
- #        #     self.player.payoff_marginal = Constants.consbenefit - price
- #        #     self.player.bid_total = price
- #        # else:
- #        	product = ("Prod" + str(self.player.contract_seller_rolenum))
- #        	# productdims = [pd.value for pd in ]
 
- #            bid = self.player.create_bid(ask.total, pricedims)
+		product_dims = []
+		product_choice = self.participant.vars["product_selected" + str(self.subsession.round_number)]
+		# Create a list of lists where each individual list is product dimension i for all products
+		for i in range(self.subsession.num_products):
+			product = "Prod" + str(i + 1)
+			# product_dims.append([pd.value for pd in self.get]) TODO: finish this line using general_dimensions views line 376
 
- #            self.group.create_contract(bid=bid, ask=ask)
- #            self.player.set_buyer_data()
+		products_list = list(zip(range(1, self.subsession.productdims_total + 1), zip(*product_dims)))
+
+
+class ChoiceASL(Page):
+	form_model = models.Player
+	form_fields = ['product_selected']
+
+	def is_displayed(self):
+		return self.subsession.is_asl
+
+	def vars_for_template(self):
+		products_total = Constants.num_products[self.subsession.block - 1]
+		productdims_total = Constants.productdims_total[self.subsession.block - 1]
+		productdims_shown = Constants.productdims_shown[self.subsession.block - 1]
+
+		productdimvals = self.session.vars["productdims_round" + str(self.round_number)]
+		productdimvals_shown = self.session.vars["productdims_shown_round" + str(self.round_number)]
+		preferencedims = self.session.vars["preferencedims_round" + str(self.round_number)]
+
+		products_list = list(range(1, product_total + 1))
+		productdims_list = list(range(1, productdims_shown + 1))
+		productdims_reversed = list(map(list, zip(*productdims_shown)))
+
+		treatmentorder = list(map(int, self.session.config['treatmentorder'].split(',')))
+		treatmentorder = [i - 1 for i in treatmentorder]
+
+		numpracticerounds = sum(Constants.num_rounds_practice[:self.subsession.block])
+		numtreatrounds = sum(num_rounds_treatment[:self.subsession.block])
+		roundnum = self.subsession.round_number - numpracticerounds
+
+
 @login_required
 def ViewData(request):
 	return render(request, 'tiered_disclosure/adminData.html', {"session_code": Session.objects.last().code})
@@ -154,5 +182,6 @@ page_sequence = [
     InstructionsBasicsQuiz,
     PracticeBegin,
     ChoiceTruncation,
-    RoundResults
+    TruncationRoundResults,
+	ChoiceASL
 ]

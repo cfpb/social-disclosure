@@ -101,18 +101,19 @@ class Subsession(BaseSubsession):
          # practice rounds
         practice_rounds = [new_block_rounds[i] + j for i in range(len(new_block_rounds) - 1) for j in range(num_rounds_practice[i])]
 
-
         new_block_rounds = [sum(Constants.num_rounds_treatment[:i]) + sum(Constants.num_rounds_practice[:i]) + 1 for i in range(len(num_rounds_treatment) + 1)]
-        print('new_block_rounds is', new_block_rounds)
-        print('round_number is', self.round_number)
-        print('treatmentorder is', treatmentorder)
-        print('num_products is', num_products)
-        print('productdims_total is', productdims_total)
-        print('productdims_shown is', productdims_shown)
-        print('asl is', asl)
-
- 		# set treatment-level variables
- 		# Determine if this is the first round of a new block. This is also used to display new instructions
+        # print('new_block_rounds is', new_block_rounds)
+        # print('round_number is', self.round_number)
+        # print('treatmentorder is', treatmentorder)
+        # print('num_products is', num_products)
+        # print('productdims_total is', productdims_total)
+        # print('productdims_shown is', productdims_shown)
+        # print('asl is', asl)
+        # print('practice_rounds is', practice_rounds)
+        # print('self.round_number is', self.round_number)
+        #
+        #  set treatment-level variables
+        #  Determine if this is the first round of a new block. This is also used to display new instructions
         if self.round_number in new_block_rounds:
             self.block_new = True
             self.block = new_block_rounds.index(self.round_number) + 1
@@ -127,8 +128,6 @@ class Subsession(BaseSubsession):
         self.treatment = self.block
 
         # Is this a practice round?
-        print('practice_rounds is', practice_rounds)
-        print('self.round_number is', self.round_number)
         if self.round_number in practice_rounds:
             self.practiceround = True
             self.realround = False
@@ -155,19 +154,19 @@ class Subsession(BaseSubsession):
         self.products = num_products[self.block - 1]
         self.is_asl = asl[self.block - 1]
 
-        self.session.vars["products_round" + str(self.round_number)] = []
+        self.session.vars["productdims_round" + str(self.round_number)] = []
         product_dims = []
         for i in range(self.products):
             product_dims.append(set_productdims(self.productdims_total)["productdims"]) 
-        self.session.vars["products_round" + str(self.round_number)] = product_dims
+        self.session.vars["productdims_round" + str(self.round_number)] = product_dims
 
-        self.session.vars["preferences_round" + str(self.round_number)] = []
+        self.session.vars["preferencedims_round" + str(self.round_number)] = []
         preference_dims = []
         for i in range(self.preferences):
             preference_dims.append(set_prefdims(self.preferences)["prefdims"]) 
-        self.session.vars["preferences_round" + str(self.round_number)] = preference_dims
+        self.session.vars["preferencedims_round" + str(self.round_number)] = preference_dims
      
-    #version 1 of function to not show hidden dimensions:
+    #version 1 of function to hide hidden dimensions:
         productdims_shown = []
         for j in range(self.products):
             truncatedvals = [0]*(self.productdims_shown)
@@ -179,7 +178,7 @@ class Subsession(BaseSubsession):
             truncvalues = copy.copy(truncatedvals)
             productdims_shown.append(truncvalues)
 
-        self.session.vars["products_shown_round" + str(self.round_number)] = productdims_shown
+        self.session.vars["productdims_shown_round" + str(self.round_number)] = productdims_shown
 
 class Player(BasePlayer):
     bool_best_prod = models.IntegerField(doc="1 if the participant selected optimal product")
@@ -187,7 +186,7 @@ class Player(BasePlayer):
     product_selected = models.IntegerField(doc="ID of product selected by participant")
     is_mistake = models.IntegerField(doc="True if the participant selected not optimal product")
 
-    #TOADD: incoporate product information in product_selected using following as guide
+    #TOADD: incoporate product information in product_selected using following as guide:
     # contract_seller_rolenum = models.IntegerField(
     #     choices= list(zip(Constants.choice_number, Constants.choice_string)),
     #     widget=widgets.RadioSelect(),

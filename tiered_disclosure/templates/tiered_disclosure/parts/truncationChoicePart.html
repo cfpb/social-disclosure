@@ -5,7 +5,7 @@
         <thead>
             <tr>
                 <th></th>
-                {% for i in products %}
+                {% for i in products_list %}
                     <th>Product {{ i }}</th>
                 {% endfor %}
             </tr>
@@ -27,9 +27,9 @@
         {% endfor %}
     <tr>
         <td></td>
-        {% for i in products %}
+        {% for i in products_list %}
         <td>
-            <label><input type = "radio" required = "" id="product_selected" name = "product_selected" value = {{ i|stringformat:"i"}} >
+            <label><input type = "radio" required = "" id="product_selected" name = "product_selected" value = {{i}}>
                 Product {{ i }}
             </label>
         </td>

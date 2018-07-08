@@ -6,9 +6,10 @@
     <div class="col">
         <div class="earnings_prose">
             <p>
-                This round you selected product {{ }} and received a benefit of {{ }} (show calculation).
-                {% if {{ product_selected }} is {{ best_product }} }
-                The product you selected was the best product given your preferences.
+                This round you selected product __ and received a benefit of __ (show calculation).
+                {% if product_selected == best_product % }
+                    The product you selected was the best product given your preferences.
+                {% endif % }
             </p>
                 Your earnings are itemized in the table below.
             </p>
