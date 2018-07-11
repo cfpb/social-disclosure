@@ -29,7 +29,7 @@
         <td></td>
         {% for i in products_list %}
         <td>
-            <label><input type = "radio" required = "" id="product_selected" name = "product_selected" value = {{i}}>
+            <label><input type = "radio" required = "" name = "product_selected" value = {{ i|stringformat:"i"}}>
                 Product {{ i }}
             </label>
         </td>

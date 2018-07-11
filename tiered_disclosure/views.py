@@ -82,9 +82,6 @@ class ChoiceTruncation(Page):
 
 
 
-
-
-
 		# product_dims = []
 		# if self.subsession.practiceround:
 		# 	productdims = self.participant.vars["practice_proddims" + str(self.subsession.round_number)]
@@ -120,10 +117,9 @@ class ChoiceTruncation(Page):
 
 		}
 
-	def before_next_page(self):
-		product_choice = self.get_product_by_id("Prod" + str(self.player.product_selected))
-		productdims = [pd.value for pd in ask.productdim_sell.all()]
-
+	# def before_next_page(self):
+		# product_choice = self.get_product_by_id("Prod" + str(self.player.product_selected))
+		# productdims = [pd.value for pd in ask.productdim_sell.all()]
 
 
 
@@ -131,13 +127,14 @@ class TruncationRoundResults(Page):
 	def vars_for_template(self):
 
 		product_dims = []
-		product_choice = self.participant.vars["product_selected" + str(self.subsession.round_number)]
+        # product_choice = player.product_selected
+		# product_choice = self.participant.vars["product_selected" + str(self.subsession.round_number)]
 		# Create a list of lists where each individual list is product dimension i for all products
-		for i in range(self.subsession.num_products):
-			product = "Prod" + str(i + 1)
+		# for i in range(self.subsession.num_products):
+		# 	product = "Prod" + str(i + 1)
 			# product_dims.append([pd.value for pd in self.get]) TODO: finish this line using general_dimensions views line 376
 
-		products_list = list(zip(range(1, self.subsession.productdims_total + 1), zip(*product_dims)))
+		# products_list = list(zip(range(1, self.subsession.productdims_total + 1), zip(*product_dims)))
 
 
 class ChoiceASL(Page):

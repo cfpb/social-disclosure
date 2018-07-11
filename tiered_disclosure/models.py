@@ -36,7 +36,7 @@ class Constants(BaseConstants):
     num_rounds_treatment = [4,4]
     ##############################################
 
-   
+
 
     # OTHER PARAMETERS
     name_in_url = 'tiered_disclosure'
@@ -80,6 +80,9 @@ class Subsession(BaseSubsession):
     show_instructions_practice = models.BooleanField(doc="True if practice round specific instructions are to be shown.")
     show_instructions_real = models.BooleanField(doc="True if real round specific instructions are to be shown.")
 
+    bool_best_prod = models.IntegerField(doc="1 if the participant selected optimal product")
+    best_product = models.IntegerField(doc="ID of product maximizes utility for participant")
+    is_mistake = models.IntegerField(doc="True if the participant selected not optimal product")
     def vars_for_admin_report(self):
         return {"session_code": self.session.code,
             }
@@ -146,7 +149,7 @@ class Subsession(BaseSubsession):
         self.show_instructions_real = True if Constants.show_instructions_admin and (self.realround and \
             self.round_number != 1 and (self.round_number - 1 in practice_rounds or self.treatment != self.in_round(self.round_number - 1).treatment)) \
             else False
-        
+
         # store treatment number, product dims, and number of products
         self.productdims_shown = productdims_shown[self.block - 1]
         self.productdims_total = productdims_total[self.block - 1]
@@ -157,15 +160,15 @@ class Subsession(BaseSubsession):
         self.session.vars["productdims_round" + str(self.round_number)] = []
         product_dims = []
         for i in range(self.products):
-            product_dims.append(set_productdims(self.productdims_total)["productdims"]) 
+            product_dims.append(set_productdims(self.productdims_total)["productdims"])
         self.session.vars["productdims_round" + str(self.round_number)] = product_dims
 
         self.session.vars["preferencedims_round" + str(self.round_number)] = []
         preference_dims = []
         for i in range(self.preferences):
-            preference_dims.append(set_prefdims(self.preferences)["prefdims"]) 
+            preference_dims.append(set_prefdims(self.preferences)["prefdims"])
         self.session.vars["preferencedims_round" + str(self.round_number)] = preference_dims
-     
+
     #version 1 of function to hide hidden dimensions:
         productdims_shown = []
         for j in range(self.products):
@@ -180,11 +183,10 @@ class Subsession(BaseSubsession):
 
         self.session.vars["productdims_shown_round" + str(self.round_number)] = productdims_shown
 
+
+
 class Player(BasePlayer):
-    bool_best_prod = models.IntegerField(doc="1 if the participant selected optimal product")
-    best_product = models.IntegerField(doc="ID of product maximizes utility for participant")
-    product_selected = models.IntegerField(doc="ID of product selected by participant")
-    is_mistake = models.IntegerField(doc="True if the participant selected not optimal product")
+
 
     #TOADD: incoporate product information in product_selected using following as guide:
     # contract_seller_rolenum = models.IntegerField(
@@ -194,6 +196,7 @@ class Player(BasePlayer):
     # )
     #Instruction Questions
     basics_q1 = models.CharField(doc = "Instructions quiz, basics")
+    product_selected = models.IntegerField(doc="ID of product selected by participant")
 
         # dim_vals = []
         # dim_val = {}
@@ -274,4 +277,3 @@ class PrefDim(Model):
 
 class Group(BaseGroup):
     pass
-

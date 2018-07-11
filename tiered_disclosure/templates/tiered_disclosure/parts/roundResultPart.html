@@ -1,123 +1,13 @@
-{% load staticfiles otree_tags %}
+{% extends "global/Base.html" %}
+{% load static otree %}
 
+{% block title %}
+    Results
+{% endblock %}
 
-<div class="results">
-<div class="col_container">
-    <div class="col">
-        <div class="earnings_prose">
-            <p>
-                This round you selected product __ and received a benefit of __ (show calculation).
-                {% if product_selected == best_product % }
-                    The product you selected was the best product given your preferences.
-                {% endif % }
-            </p>
-                Your earnings are itemized in the table below.
-            </p>
-        </div>
-    
-        <div class="table_container">
-            <h2>Your Earnings</h2>
-            <table class="earnings"><tbody>
-                <tr>
-                    <td>Benefit</td><td>{{ Constants.consbenefit }}</td>
-                </tr><tr>
-                    <td>Cost</td><td>-{{ player.bid_total }}</td>
-                </tr><tr class="total">
-                    <td>Total </td><td>{{ player.payoff_marginal }}tokens</td>
-                </tr>
-            </tbody></table>
-            <table class="earnings">
-                <thead><tr>
-                    <th></th>
-                    <th>Value</th>
-                    <th># sold</th>
-                    <th>Totals</th>
-                </tr></thead>
-                <tbody>
-                    <tr>
-                        <td>Benefit</td><td>{{ player.ask_total }}</td>
-                        <td>x {{ player.numsold }}</td>
-                        <td> {{ benefit }}</td>
-                    </tr>
-                    <tr>
-                        <td>Cost</td><td>-{{ Constants.prodcost }}</td>
-                        <td> x {{ player.numsold }}</td>
-                        <td> {% if prodcost > 0 %} -{{ prodcost }} {% else %} 0 {% endif %}</td>
-                    </tr>
+{% block content %}
 
-                    <tr class="total">
-                        <td>Total</td>
-                        <td>{{ subtotal }}</td>
-                        <td> x {{ player.numsold }}</td>
-                        <td>{% widthratio subtotal 1 player.numsold %} tokens</td>
-                    </tr>
-            </tbody></table>
-        </div>
-    
-        <div class="table_container">
-            <h2>Your Preferences</h2>
-            <table>
-                <thead><tr>
-                    <th></th>
-                    {% for i in sellers %}
-                    <th>Seller {{ i }}</th>
-                    {% endfor %}
-                </tr></thead>
-                <tbody>
-                    {% for buyer_i, seller_list in buyer_choices %}
-                    <tr>
-                        <td>Buyer {{ buyer_i }}</td>
-                        {% for seller_j in seller_list %}
-                            <td align="center">{% if seller_j == 1 %}X{% endif %}</td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <p>Your name is {{ player.product_selected }} and your age is {{ player.product_selected }}.</p>
 
-    <div class="col prices">
-        <h2>Product Dimensions</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>{{ subsession.dims | pluralize:",Sub-prices" }}</th>
-                    {% for i in products %}
-                        <th>Product {{ i }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-            {% if subsession.dims > 1 %}
-                    {% for i, dimensions in productdimvals_reversed %}
-                        <tr>
-                            <td>
-                                <label>{{ i }}</label>
-                            </td>
-                        {% for product_dim_i in dimensions %}
-                                <td>
-                                    <span class="pricedim">
-                                        {{ product_dim_i }}
-                                    </span>
-                                </td>
-                        {% endfor %}
-                        </tr>
-                    {% endfor %}
-            {% endif %}
-            <tr>
-                {% if subsession.dims > 1 %}
-                    <td>Total Price</td>
-                {% else %}
-                    <td>Price</td>
-                {% endif %}
-                {% for total in totals %}
-                <td>
-                    {{ total }} tokens
-                </td>
-                {% endfor %}
-            </tr>
-        </tbody></table>
-    </div>
-</div>
-</div>
+    {% next_button %}
+{% endblock %}

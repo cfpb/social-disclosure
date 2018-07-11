@@ -1,0 +1,64 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+{% load otree static %}
+{% block title %}
+    Instructions ASL
+{% endblock %}
+  {% block content %}
+  	<table class="centerer"><tbody><tr><td>
+  	        <div>
+
+  	            <section>
+  	                <p>
+                      You will be assigned a preference profile and shown a list of products and their attributes. Each product gives you a certain amount of experimental currency, determined by the interaction of the product's attributes and your preference profile.
+                    </p>
+
+  	                <p>
+                      For example, suppose your preference profile was the following. ((table here)). This means that you value attribute A with intensity 1, attribute B with intensity 2, and attribute C with intensity 3. If you were asked to choose a product from the following list of products: (( product list here))
+                      Then you would receive 1*5+2*1+3*1=10 for product 1 and 1*1+2*1+3*3=12 for product 2. The best choice for you would be product 2, in this example.
+                    </p>
+  	            </section>
+
+  	            <section>
+  	                <p>
+  	                    The experiment will be conducted through the lab computers. Please do not try to speak to other participants or to look at their screens.
+  	                </p>
+  	            </section>
+  	            <section>
+  	                <p>
+  	                    As advertised, you will be given {{ showup }} today regardless of your performance in the experiment.
+  	                </p>
+  	                <p>
+  	                    In addition, in the experiment you will earn "tokens".  For every {{ tokens_per_dollar }} tokens you earn, you will be paid $1.00 in cash.  You will be paid in private at the end of the experiment.
+  	                </p>
+  	            </section>
+  	        </div>
+  	    </td></tr></tbody></table>
+  <nav>
+  	<div id="next">
+  		<button style="height:47px" value="Next" class="btn btn-primary btn-lg">Next</button>
+  	</div>
+  <!--     <input type="button" class="a-btn next" value="Next"></input>
+   -->
+  </nav>
+
+
+  {% endblock %}
+  {% block styles %}
+  	<style>
+  		#privacytext {
+  			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+      		font-size: 18px;
+   	   		color: #333;
+     	 		background-color: #fff;
+  		}
+  		#title {
+  			font-weight: bold;
+  			margin-bottom: 20px;
+  		}
+  		#next {
+  			margin-top: 20px;
+  		}
+
+      </style>
+{% endblock %}

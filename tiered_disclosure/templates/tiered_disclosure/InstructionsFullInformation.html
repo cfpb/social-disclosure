@@ -1,0 +1,51 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+{% load otree static %}
+{% block title %}
+    Instructions ASL
+{% endblock %}
+
+  {% block content %}
+  	<table class="centerer"><tbody><tr><td>
+  	        <div>
+
+  	            <section>
+  	                <p>
+                      You will be assigned a preference profile and asked to choose one (1) product from a list of products. Each product gives you a certain amount of tokens, determined by the interaction of the product's attributes and your preference profile. </p>
+  	                <p>
+                      As an example, if your preference profile were the following: ((table)) This means that you value attribute A with intensity 1, attribute B with intensity 2, and attribute C with intensity 3.
+  	                </p>
+  	                <p>
+                      If you were shown two products, product 1 and product 2, which had different attribute values as shown in the following table:
+  	                </p>
+                    <p>
+                      Then you would receive 1*5+2*1+3*1=10 tokens for product 1, and 1*1+2*1+3*3=12 tokens for product 2. The best choice for you would be product 2, in this example, because you receive more tokens from product 2 than product 1.
+  	            </section>
+  	        </div>
+  	    </td></tr></tbody></table>
+  <nav>
+  	<div id="next">
+  		<button style="height:47px" value="Next" class="btn btn-primary btn-lg">Next</button>
+  	</div>
+  </nav>
+
+
+  {% endblock %}
+  {% block styles %}
+  	<style>
+  		#privacytext {
+  			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+      		font-size: 18px;
+   	   		color: #333;
+     	 		background-color: #fff;
+  		}
+  		#title {
+  			font-weight: bold;
+  			margin-bottom: 20px;
+  		}
+  		#next {
+  			margin-top: 20px;
+  		}
+
+      </style>
+{% endblock %}

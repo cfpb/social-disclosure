@@ -1,0 +1,25 @@
+{% extends "otree/FormPage.html" %}
+{% load staticfiles otree_tags %}
+
+{% block global_styles  %}
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <!-- <link href="{% static "global/cf-core.min.css" %}" rel="stylesheet">
+    <link href="{% static "global/cf-typography.min.css" %}" rel="stylesheet">
+    <link href="{% static "global/cf-tables.min.css" %}" rel="stylesheet">
+    <link href="{% static "global/cf-buttons.min.css" %}" rel="stylesheet">
+    <link href="{% static "global/cf-forms.min.css" %}" rel="stylesheet"> -->
+    <link href="{% static "global/capital-framework.css" %}" rel="stylesheet">
+    <link href="{% static "global/custom.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block global_scripts  %}
+    <!-- HighCharts charting library is pre-loaded with oTree -->
+    <!--<script src="//code.highcharts.com/highcharts.js"></script>-->
+    <!--<script src="//code.highcharts.com/highcharts-3d.js"></script>-->
+    <!--<script src="//code.highcharts.com/modules/exporting.js"></script>-->
+
+    <!--Custom scripts-->
+    <script type="text/javascript" src="{% static 'global/custom.js' %}"></script>
+
+{% endblock %}

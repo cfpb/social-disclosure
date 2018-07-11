@@ -1,0 +1,49 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    {% if subsession.practiceround %}
+        Practice Round
+    {% else %}
+        Round {{ round }} of {{ treatmentrounds }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if Constants.show_truncation_timer %}
+        <div id="timer">
+            <label>Time Remaining:</label>
+            <input type = "test" disabled = "disabled" value="{{ Constants.truncation_timer }}">
+            </input>
+        </div>
+    {% endif %}
+    <div class="col_container">
+        <div class="col realround_instructions">
+            <p>
+                There are {{ products_total }} products in this round. Each product has {{ productdims_total }} attributes. The product attribute values are as follows: {{ productdimvals_shown }}
+
+                (TESTING: the full productdims matrix is {{ productdimvals }})
+            </p>
+            <p>
+                Your preference profile is as follows: {{ preferencedims }}
+            </p>
+            <p>
+            </p>
+            <p>As a reminder:</p>
+            <ul>
+                <li>Each product has multiple attributes.</li>
+                <li>Your preference for these attributes are shown in your preference profile.</li>
+            </ul>
+            <p>Please choose a product.<p>
+        </div>
+        <div class="col">
+            {% include "tiered_disclosure/parts/fullinformationChoicePart.html" %}
+        </div>
+             <nav>
+                <button class="a-btn next" >Next</button>
+            </nav>
+    </div>
+{% endblock %}
+{% block app_styles %}
+   <link href="{% static "tiered_disclosure/Truncation.css" %}" rel="stylesheet">
+{% endblock %}

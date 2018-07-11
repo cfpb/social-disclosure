@@ -1,5 +1,4 @@
-{% extends "global/Page.html" %}
-
+{% extends "global/Base.html" %}
 {% load staticfiles otree_tags %}
 {% load otree static %}
 {% block title %}
@@ -15,12 +14,10 @@
 
 	                <p>
 	                    During the experiment, we require your complete attention. Please do not speak to other participants or engage in other distracting activities such as using your cell phone.  Please do not use the computer except as instructed.
-	                    <!--, so we ask that you follow these instructions carefully. Please do not use the computer except as specifically instructed, and do not chat with other students or engage in activities such as using your cell phone or headphones or reading books.-->
 	                </p>
 
 	                <p>
 	                    You will be paid in cash at the end of the experiment, and the amount you earn depends on your choices during the experiment. It is therefore important that you follow along carefully and fully understand the instructions.
-	                    <!--For your participation, you will be paid in cash at the end of the experiment. Different participants may earn different amounts, and what you earn depends partly on your decisions, partly on the decisions of others, and partly on chance. It is therefore important that you follow the instructions carefully and fully understand the instructions before the experiment begins.-->
 	                </p>
 	            </section>
 
@@ -38,9 +35,6 @@
 	                </p>
 	                <p>
 	                    In addition, in the experiment you will earn "tokens".  For every {{ tokens_per_dollar }} tokens you earn, you will be paid $1.00 in cash.  You will be paid in private at the end of the experiment.
-	                </p>
-	                <p>
-	                    <!--At the end of the experiment, you will be paid what you earned in all matches, plus the show-up fee of <b>{{ showup }}</b>. Everyone will be paid in private and you are under no obligation to tell others how much you earned. Your earnings during the experiment are denominated in tokens. At the end of the experiment you will be paid $1.00 for every <b>{{ tokens_per_dollar }}</b> tokens you earned.-->
 	                </p>
 	            </section>
 	        </div>
