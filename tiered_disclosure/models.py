@@ -87,7 +87,7 @@ class Subsession(BaseSubsession):
         return {"session_code": self.session.code,
             }
 
-    def before_session_starts(self): #changed from before_session_starts
+    def before_session_starts(self):
         treatmentorder = list(map(int, self.session.config['treatmentorder'].split(',')))
         treatmentorder = [i - 1 for i in treatmentorder]
         print('treatmentorder - 1 is', treatmentorder)
@@ -183,6 +183,8 @@ class Subsession(BaseSubsession):
 
         self.session.vars["productdims_shown_round" + str(self.round_number)] = productdims_shown
 
+        if self.practiceround:
+            self.practicipant.vars["practice_proddims" + str(self.round_number)] = []
 
 
 class Player(BasePlayer):

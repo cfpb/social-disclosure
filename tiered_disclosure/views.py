@@ -40,6 +40,17 @@ class PracticeBegin(Page):
 
         }
 
+class PracticeEnd(Page):
+    def is_displayed(self):
+        return self.subsession.show_instructions_practice
+
+    def vars_for_template(self):
+        practicerounds = Constants.num_rounds_practice[self.subsession.block - 1]
+        return {
+            "practicerounds": practicerounds
+
+        }
+
 class InstructionsTruncation(Page):
 	def is_displayed(self):
 		return self.subsession.show_instructions_truncation
@@ -82,11 +93,13 @@ class ChoiceTruncation(Page):
 
 
 
-		# product_dims = []
-		# if self.subsession.practiceround:
-		# 	productdims = self.participant.vars["practice_proddims" + str(self.subsession.round_number)]
-		# else:
-		# 	for i in range(self.subsession.products):
+		product_dims = []
+		if self.subsession.practiceround:
+			pass
+			# product_dims = self.participant.vars["practice_proddims" + str(self.subsession.round_number)]
+		else:
+			for i in range(self.subsession.products):
+				pass
 		# 		product_dims.append([pd.value for pd in self.group.get_player_by_role(role).get_ask().productdim_set.all()])
 
 
@@ -96,6 +109,9 @@ class ChoiceTruncation(Page):
 			"productdims_total": productdims_total,
 			"productdims_shown": productdims_shown,
 
+			"productdimvals": productdimvals,
+			"productdimvals_shown": productdimvals_shown,  # number of product dims shown
+			"productdimvals_reversed": productdimvals_reversed,
 
 			"products_list": products_list,
 			"productdims_list": productdims_list,
@@ -107,9 +123,7 @@ class ChoiceTruncation(Page):
 			"numtreatrounds": numtreatrounds,
 			"roundnum": roundnum,
 
-			"productdimvals": productdimvals,
-			"productdimvals_shown": productdimvals_shown,  # number of product dims shown
-			"productdimvals_reversed": productdimvals_reversed,
+
 
 			"practicerounds": Constants.num_rounds_practice[self.subsession.block - 1],
 			"preferencedims": preferencedims,
@@ -117,16 +131,33 @@ class ChoiceTruncation(Page):
 
 		}
 
-	# def before_next_page(self):
+	def before_next_page(self):
+		pass
 		# product_choice = self.get_product_by_id("Prod" + str(self.player.product_selected))
 		# productdims = [pd.value for pd in ask.productdim_sell.all()]
+		# if self.subsession.practiceround:
+		# 	self.participant.vars["practice_proddims" + str(self.subsession.round_number)] = [[0] * self.subsession.productdims_total for i in range(self.subsession.num_products)]
+		# else:
+		# 	self.participant.vars["proddims" + str(self.subsession.round_number)] = [[0] * self.subsession.productdims_total for i in range(self.subsession.num_products)]
 
 
 
-class TruncationRoundResults(Page):
+class RoundResults(Page):
 	def vars_for_template(self):
 
+		productdimvals = self.session.vars["productdims_round" + str(self.round_number)]
+
+
+		# if self.subsession.practiceround:
+		# 	products = self.participant.vars["practice_proddims" + str(self.subsession.round_number)]
+		# 	# if self.subsession.is_asl:
+		# else:
+		# 	products = self.participant.vars["proddims" + str(self.subsession.round_number)]
+		# 	preferences = self
+			# if self.subsession.is_asl:
+				
 		product_dims = []
+		preferencedims = []
         # product_choice = player.product_selected
 		# product_choice = self.participant.vars["product_selected" + str(self.subsession.round_number)]
 		# Create a list of lists where each individual list is product dimension i for all products
@@ -135,8 +166,9 @@ class TruncationRoundResults(Page):
 			# product_dims.append([pd.value for pd in self.get]) TODO: finish this line using general_dimensions views line 376
 
 		# products_list = list(zip(range(1, self.subsession.productdims_total + 1), zip(*product_dims)))
-
-
+		return {
+			"productdimvals": productdimvals,
+		}
 class ChoiceASL(Page):
 	form_model = models.Player
 	form_fields = ['product_selected']
@@ -174,11 +206,24 @@ def DataDownload(request):
 	headers, body = export.export_contracts()
 	return export.export_csv("Data", headers, body)
 
+# page_sequence = [
+#     InstructionsBasics,
+#     InstructionsBasicsQuiz,
+#     InstructionsASL,
+#     InstructionsASLQuiz,
+#     InstructionsTruncation,
+#     InstructionsTruncationQuiz,
+#     InstructionsNewTreatment,
+#     InstructionsRoundResultsQuiz,
+#     PracticeBegin,
+#     PracticeEnd,
+#     ChoiceTruncation,
+#     ChoiceASL,
+#     RoundResults,
+# ]
+
 page_sequence = [
-    InstructionsPage,
-    InstructionsBasicsQuiz,
-    PracticeBegin,
     ChoiceTruncation,
-    TruncationRoundResults,
-	ChoiceASL
+    ChoiceASL,
+    RoundResults,
 ]
