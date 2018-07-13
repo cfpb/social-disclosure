@@ -7,8 +7,33 @@
 
 {% block content %}
 
-{% if }
-    <p>You selected product {{ player.product_selected }}</p>
-    <p>This product had attributes {{ productdimvals }}</p>
+    <p>You selected product {{ product_selected }}</p>
+    <p>The full list of attributes for the product that you selected is {{ productdimvals_selected }}</p>
+    <p>Here is a table of the full list of attributes for each product</p>
+    <table id = "products">
+    <thead>
+        <tr>
+            <th></th>
+            {% for i in products_list %}
+                <th>Product {{ i }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for dimensions in productdimvals_transposed%}
+        <tr>
+            <td>
+                <label></label>
+            </td>
+        {% for product_dim_i in dimensions%}
+            <td>
+                <span>
+                    {{ product_dim_i }}
+                </span>
+            </td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+</tbody></table>
     {% next_button %}
 {% endblock %}

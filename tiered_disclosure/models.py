@@ -103,7 +103,6 @@ class Subsession(BaseSubsession):
         new_block_rounds = [sum(num_rounds_treatment[:i]) + sum(num_rounds_practice[:i]) + 1 for i in range(len(num_rounds_treatment) + 1)]
          # practice rounds
         practice_rounds = [new_block_rounds[i] + j for i in range(len(new_block_rounds) - 1) for j in range(num_rounds_practice[i])]
-
         new_block_rounds = [sum(Constants.num_rounds_treatment[:i]) + sum(Constants.num_rounds_practice[:i]) + 1 for i in range(len(num_rounds_treatment) + 1)]
         # print('new_block_rounds is', new_block_rounds)
         # print('round_number is', self.round_number)
@@ -159,9 +158,17 @@ class Subsession(BaseSubsession):
 
         self.session.vars["productdims_round" + str(self.round_number)] = []
         product_dims = []
+        products_dict = {}
+
         for i in range(self.products):
-            product_dims.append(set_productdims(self.productdims_total)["productdims"])
+            product = set_productdims(self.productdims_total)["productdims"]
+            product_dims.append(product)
+            products_dict[i] = product
         self.session.vars["productdims_round" + str(self.round_number)] = product_dims
+        productdict = [product_dims[i] for i in range(self.products)]
+        self.session.vars["productdict_round" + str(self.round_number)] = productdict
+        self.session.vars["productsdict_round" + str(self.round_number)] = products_dict
+
 
         self.session.vars["preferencedims_round" + str(self.round_number)] = []
         preference_dims = []
@@ -184,7 +191,7 @@ class Subsession(BaseSubsession):
         self.session.vars["productdims_shown_round" + str(self.round_number)] = productdims_shown
 
         if self.practiceround:
-            self.practicipant.vars["practice_proddims" + str(self.round_number)] = []
+            self.session.vars["practice_proddims" + str(self.round_number)] = []
 
 
 class Player(BasePlayer):
@@ -199,7 +206,8 @@ class Player(BasePlayer):
     #Instruction Questions
     basics_q1 = models.CharField(doc = "Instructions quiz, basics")
     product_selected = models.IntegerField(doc="ID of product selected by participant")
-
+    product_selected_dims = []
+    product_selected_dims = models.IntegerField(doc="dimvals of product selected by participant")
         # dim_vals = []
         # dim_val = {}
         # for i in range(1, prod_total[1]):
@@ -209,8 +217,6 @@ class Player(BasePlayer):
         #         dim_id = j
         #         dim_vals.append(dim_value)
         #         dim_val["Prod"+str(prod_id)+"Dim"+str(dim_id)] = dim_value
-
-
 
 class Product(Model): #custom model inherits from Django base class "Model". Based off Ask class.
     """ Stores details of a product """
