@@ -170,7 +170,7 @@ def export_contracts():
     player_fns = []
     subsession_fns = ["round_number", "treatment", "practiceround", "realround", "num_products", "num_prefdims", "productdims_total", "productdims_shown"]
     player_fns_d = ["product_selected", "is_mistake", "best_product", "time_seconds"]
-    d = dict(enumerate(string.ascii_lowercase, 1))
+    d = dict(enumerate(string.ascii_lowercase, 1)) #converts number to alphabet
     prefdim_fns = ["prefdim_" + str(d[i]) for i in range(1, maxprefdim + 1)]
     proddim_fns = ["prod_" + str(i) + "dim_" + str(d[j]) for i in range(1, maxproduct + 1) for j in range(1, maxproductdim + 1)]
     playerutil_fns = ["util_prod" + str(i) for i in range(1, maxproduct+1)]

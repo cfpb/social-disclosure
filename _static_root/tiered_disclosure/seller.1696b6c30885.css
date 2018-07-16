@@ -1,0 +1,157 @@
+/* Instructions Specific */
+
+table.seller_outcomes{
+    margin-top:35px;
+    clear:left;
+    position:relative;
+    float:left;
+}
+.seller_widget.example{
+    display: none;
+}
+
+form.selected_section_2 .seller_widget.example, form.selected_section_3 .seller_widget.example, form.selected_section_4 .seller_widget.example{
+    display: inline;
+}
+form.selected_section_1 .seller_widget.example.truncated_instructions{
+    display: inline;
+}
+section{
+    min-height: 367px;
+}
+
+/* Seller Page Specific */
+
+/* General Seller */
+.form-group{
+    width: 132px;
+    position: relative;
+    float: left;
+}
+.form-control{
+    color:#222;
+}
+
+.seller_widget{
+    float:left;
+    position:relative;
+    width: 317px;
+    margin: -56px 0 0 38px;
+    border-radius: 8px;
+    padding: 16px 0 14px 14px;
+    background-color: #DBEDD4;
+}
+.seller_widget table{
+    border-top: 1px solid #aaa;
+    margin-top: 0px;
+    width: 151px;
+}
+
+.seller_widget tbody tr{
+    border-bottom:none;
+}
+.seller_widget tbody tr:first-child td{
+    padding-top: 3px;
+}
+.seller_widget td{
+    padding: 1px 0 0;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.seller_widget td label{
+    color: #666;
+    font-size: 15px;
+    font-weight: normal;
+    margin: 0;
+    padding: 7px 0 0;
+}
+
+.seller_widget th{
+    padding: 3px 0 2px 15px;
+    font-size: 12px;
+    font-weight: normal;
+    border-bottom: 1px solid #ccc;
+}
+.seller_widget th:first-child{
+    padding-left: 5px;
+    width: 85px;
+}
+#distribute{
+    width: 97px;
+    height: 35px;
+    margin: 4px 0 0 43px;
+    padding: 1px 0.875em 0;
+    border-radius: .25em;
+    border: none;
+    background-color: #DBEDD4;
+    font-size: 16px
+}
+#distribute:hover{
+    background-color: #ADDC91;
+}
+#id_ask_total{
+    float: left;
+    font-size: 26px;
+    height: 39px;
+    margin-right: 4px;
+    padding: 4px 12px 0;
+    width: 78px;
+    background-color:#eee;
+}
+.field-cover{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    height: 50px;
+    width: 100%;
+    z-index: 10;
+
+}
+.control-label{
+    float: left;
+    font-size: 16px;
+    margin: 0;
+    text-align: left;
+    width: 43px;
+    line-height: 1.1;
+    padding: 2px 0 0;
+    height: 36px;
+}
+.productdim{
+    font-size: 20px;
+    height: 36px;
+    padding: 5px 12px 0;
+    margin: 2px 0;
+}
+.col:first-child{
+    width: 594px;
+}
+.col_container{
+    /*float:none;*/
+    /*position: relative;*/
+    /*width: 800px;*/
+    /*margin: 0 auto;*/
+}
+
+/* One dim specific */
+.one_dim.seller_widget{
+    width: 268px;
+    margin:0 0 2px 0;
+}
+.one_dim #id_ask_total{
+    width: 160px;
+    height: 45px;
+    font-size: 22px;
+    background: white;
+}
+.one_dim .control-label{
+    font-size: 21px;
+    padding: 13px 12px 0 0;
+    width: auto;
+}
+.one_dim .form-group{
+    width: 100%;
+    margin: 0;
+}

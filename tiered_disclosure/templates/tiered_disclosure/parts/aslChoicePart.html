@@ -1,0 +1,25 @@
+{% load staticfiles otree_tags %}
+
+
+    <table id = "products">
+        <thead>
+            <tr>
+                <th></th>
+                {% for i in products_list %}
+                    <th>Product {{ i }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% for i in products_list %}
+                <td>
+                    <label>
+                        <input type = "radio" required = "" name = "product_selected" value = {{ i|stringformat:"i"}}>
+                        Product {{ i }}
+                    </label>
+                </td>
+            {% endfor %}
+            </tr>
+        </tbody>
+    </table>

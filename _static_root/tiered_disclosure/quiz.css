@@ -1,0 +1,79 @@
+.form-group{
+    margin: 20px 0 0;
+}
+.quiz_js {
+    float: left;
+    position: relative;
+    display: none;
+    min-height: 212px
+}
+.quiz_js.selected{
+    display: inline;
+}
+.quiz_js .answer{
+    display: none;
+}
+
+.answer h2{
+    display: none;
+}
+
+/* Old Stuff */
+.quiz_hold, table.table{
+    max-width: 800px;
+    margin: 0 auto;
+}
+.control-label{
+    margin: 0 0 0 0;
+    font-size: 20px;
+}
+.controls > ul{
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+.form-group{
+    float: left;
+    position:relative;
+    clear: left;
+}
+li{
+    margin:0;
+}
+li label, li input{
+    cursor: pointer
+}
+li label {
+    font-size: 18px;
+    height: 47px;
+    border: 1px solid #ccc;
+    width: auto;
+    min-width: 200px;
+    float: left;
+    clear: both;
+    padding: 11px 10px 10px 10px;
+    cursor: pointer;
+    margin: 0 0 9px;
+}
+li label:hover{
+    background: #eee;
+
+}
+li label:active{
+    background: #ddd;
+}
+li label.selected{
+    background: #eee;
+}
+
+.incorrect{
+    color: #da6750;
+}
+.correct{
+    color: #2cb34a;
+}
+
+/* survey stuff */
+#otree-content > p:first-child{
+    margin-bottom: 30px;
+    font-size: 17px;
+}

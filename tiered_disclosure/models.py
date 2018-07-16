@@ -31,9 +31,10 @@ class Constants(BaseConstants):
     productdims_shown = [2, 2]
     num_prefdims = [3, 3]
     num_products = [3, 6]
-    asl_flag = [0,0]
+    num_representatives = [2, 2]
+    asl_flag = [0,1]
     practicerounds = [True, False]
-    num_rounds_treatment = [4,4]
+    num_rounds_treatment = [1,1]
     ##############################################
 
 
@@ -68,9 +69,10 @@ class Subsession(BaseSubsession):
     block = models.IntegerField(doc="The order in which the treatment was played in the session")
     block_new = models.BooleanField(default=False, doc="True if round is the first in a new treatment block")
     num_products = models.IntegerField(doc="The number of products in the treatment")
+    num_representatives = models.IntegerField(doc="The number of representatives in the treatment")
     productdims_total = models.IntegerField(doc="The number of product dimensions in the treatment")
     productdims_shown = models.IntegerField(doc="The number of shown product dimensions in the treatment")
-    num_prefdims = models.IntegerField(doc="The number of preferences in player profile in the treatment")
+    num_prefdims = models.IntegerField(doc="The number of preference dimensions in the treatment")
     treatment = models.IntegerField(doc="The ID of the treatment ")
     dim_val = models.IntegerField(doc="The values of each dimension")
     is_asl = models.IntegerField(doc="1 if treatment is ASL")
@@ -96,6 +98,7 @@ class Subsession(BaseSubsession):
         productdims_total = [Constants.productdims_total[i] for i in treatmentorder]
         productdims_shown = [Constants.productdims_shown[i] for i in treatmentorder]
         num_prefdims = [Constants.num_prefdims[i] for i in treatmentorder]
+        num_representatives = [Constants.num_representatives[i] for i in treatmentorder]
         asl = [Constants.asl_flag[i] for i in treatmentorder]
         practicerounds = Constants.practicerounds
         num_rounds_treatment = [Constants.num_rounds_treatment[i] for i in treatmentorder]
@@ -154,41 +157,54 @@ class Subsession(BaseSubsession):
         self.productdims_total = productdims_total[self.block - 1]
         self.preferences = num_prefdims[self.block - 1]
         self.products = num_products[self.block - 1]
+        self.representatives = num_representatives[self.block - 1]
         self.is_asl = asl[self.block - 1]
 
         self.session.vars["productdims_round" + str(self.round_number)] = []
-        product_dims = []
-        products_dict = {}
 
-        for i in range(self.products):
-            product = set_productdims(self.productdims_total)["productdims"]
-            product_dims.append(product)
-            products_dict[i] = product
-        self.session.vars["productdims_round" + str(self.round_number)] = product_dims
-        productdict = [product_dims[i] for i in range(self.products)]
-        self.session.vars["productdict_round" + str(self.round_number)] = productdict
-        self.session.vars["productsdict_round" + str(self.round_number)] = products_dict
+        if self.is_asl:
+            representative_dims = []
+            utility_dims = []
+            # set representative values for asl rounds and calculate representative utility
+            for i in range(self.representatives):
+                representative = set_representativedims(self.productdims_total)["representativedims"]
+                representative_dims.append(representative)
+                utility = calculate_utility(self.products)["representativeutility"]
+                utility_dims.append(utility)
 
+            self.session.vars["productdims_round" + str(self.round_number)] = representative_dims
+            self.session.vars["reputility_round" + str(self.round_number)] = utility_dims
 
+        else:
+            # set product dimension values for truncation rounds
+            product_dims = []
+            for i in range(self.products):
+                product = set_productdims(self.productdims_total)["productdims"]
+                product_dims.append(product)
+            self.session.vars["productdims_round" + str(self.round_number)] = product_dims
+            # version 1 of function to hide hidden dimensions:
+            productdims_shown = []
+            for j in range(self.products):
+                truncatedvals = [0] * (self.productdims_shown)
+                for i in range(self.productdims_shown):
+                    tval = -1
+                    tval = product_dims[j][i]
+                    truncatedvals[i] = tval
+                    print("truncatedvals[i] is", truncatedvals[i])
+                truncvalues = copy.copy(truncatedvals)
+                productdims_shown.append(truncvalues)
+
+            self.session.vars["productdims_shown_round" + str(self.round_number)] = productdims_shown
+
+        #set preference profile values for participant
         self.session.vars["preferencedims_round" + str(self.round_number)] = []
         preference_dims = []
-        for i in range(self.preferences):
-            preference_dims.append(set_prefdims(self.preferences)["prefdims"])
+
+        preference = set_prefdims(self.preferences)["prefdims"]
+        preference_dims.append(preference)
         self.session.vars["preferencedims_round" + str(self.round_number)] = preference_dims
 
-    #version 1 of function to hide hidden dimensions:
-        productdims_shown = []
-        for j in range(self.products):
-            truncatedvals = [0]*(self.productdims_shown)
-            for i in range(self.productdims_shown):
-                tval = -1
-                tval = product_dims[j][i]
-                truncatedvals[i] = tval
-                print("truncatedvals[i] is", truncatedvals[i])
-            truncvalues = copy.copy(truncatedvals)
-            productdims_shown.append(truncvalues)
 
-        self.session.vars["productdims_shown_round" + str(self.round_number)] = productdims_shown
 
         if self.practiceround:
             self.session.vars["practice_proddims" + str(self.round_number)] = []
@@ -228,6 +244,31 @@ class Product(Model): #custom model inherits from Django base class "Model". Bas
     #         pd = self.productdim_set.create(dimnum=i + 1, value=random.uniform(0,1))
     #         pd.save()
 
+def calculate_utility(numproducts):
+    print('entering calculate_utility')
+    rawvals = [0]*numproducts
+    for i in range(numproducts):
+        val = -1
+        val = round(random.random(),2) #use halton draws instead?
+        rawvals[i] = val
+    uvalues = copy.copy(rawvals)
+    print('uvalues is', uvalues)
+    return {
+        'representativeutility': uvalues,
+    }
+
+def set_representativedims(numdims):
+    print('entering set_representativedims')
+    rawvals = [0]*numdims
+    for i in range(numdims):
+        val = -1
+        val = round(random.random(),2) #use halton draws instead
+        rawvals[i] = val
+    rvalues = copy.copy(rawvals)
+    print('rvalues is', rvalues)
+    return {
+        'representativedims': rvalues,
+    }
 
 def set_productdims(numdims):
     print('entering set_productdims')
@@ -239,7 +280,6 @@ def set_productdims(numdims):
 
     dvalues = copy.copy(rawvals)
     print('dvalues is', dvalues)
-
 
     return {
         'productdims': dvalues,

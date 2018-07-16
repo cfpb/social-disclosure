@@ -11,28 +11,26 @@
             </tr>
         </thead>
         <tbody>
-        {% for dimensions in productdimvals_transposed%}
+            {% for dimensions in productdimvals_transposed%}
+                <tr>
+                {% for product_dim_i in dimensions%}
+                    <td>
+                        <span>
+                            {{ product_dim_i }}
+                        </span>
+                    </td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
             <tr>
+            {% for i in products_list %}
                 <td>
-                    <label></label>
-                </td>
-            {% for product_dim_i in dimensions%}
-                <td>
-                    <span>
-                        {{ product_dim_i }}
-                    </span>
+                    <label>
+                        <input type = "radio" required = "" name = "product_selected" value = {{ i|stringformat:"i"}}>
+                        Product {{ i }}
+                    </label>
                 </td>
             {% endfor %}
             </tr>
-        {% endfor %}
-    <tr>
-        <td></td>
-        {% for i in products_list %}
-        <td>
-            <label><input type = "radio" required = "" name = "product_selected" value = {{ i|stringformat:"i"}}>
-                Product {{ i }}
-            </label>
-        </td>
-        {% endfor %}
-    </tr>
-    </tbody></table>
+        </tbody>
+    </table>
