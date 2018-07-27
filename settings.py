@@ -155,12 +155,13 @@ SESSION_CONFIGS = [
         ],
         'real_world_currency_per_point': (1.00/700), #CHANGE
         'num_demo_participants': 1, 
-        'treatmentorder': '1,2',
+        'treatmentorder': '1,2,3,4',
         'doc': """
         Specify treatmentorder with no spaces, and numbers separated by commas. Treatments are as follows:\n\n
         Treatment 1: Truncation, 3 products, 2 shown dimensions, 3 total dimensions\n\n
         Treatment 2: Truncation, 6 products, 2 shown dimensions, 3 total dimensions\n\n
-        Treatment 3: ASL, 2 products, 2 shown dimensions, 3 total dimensions\n\n
+        Treatment 3: ASL, 2 products, 2 representatives, 3 total dimensions\n\n
+        Treatment 4: ASL, 6 products, 2 representatives, 3 total dimensions\n\n
         """
     },
 ]

@@ -1,13 +1,11 @@
 {% extends "global/Base.html" %}
-{% load static otree %}
+{% load static otree_tags %}
 
 {% block title %}
     Results
 {% endblock %}
 
 {% block content %}
-
-    <p>Your name is {{ player.product_selected }} and your age is {{ player.product_selected }}.</p>
 
     {% next_button %}
 {% endblock %}

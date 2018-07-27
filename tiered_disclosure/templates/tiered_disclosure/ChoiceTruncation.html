@@ -3,9 +3,9 @@
 
 {% block title %}
     {% if subsession.practiceround %}
-        Practice Round
+        Practice Round (Truncation)
     {% else %}
-        Round {{ treatmentroundnum }} of {{treatmentrounds }}
+        Round {{ round }} of {{ treatmentrounds }} (Truncation)
     {% endif %}
 {% endblock %}
 
@@ -19,51 +19,49 @@
     {% endif %}
     <div class="col_container">
         <div>
-                <p>
-                    There are {{ products_total }} products in this round.
-                </p>
-                <p>
-                    Each product has {{ productdims_total }} total attributes but only {{ productdims_shown }} of those attributes are shown to you.
-                </p>
-                <p>
-                Your preference dimensions are as follows:
+            <p>
+                There are {{ products_total }} products in this round.
+            </p>
+            <p>
+                Each product has {{ productdims_total }} total attributes but only {{ productdims_shown }} of those attributes are shown to you.
+            </p>
+            <p>
+                Your preference for each product attribute is:
                 <table id = "preferences">
                     <thead>
                         <tr>
                             <th></th>
                             {% for i in preferences_list %}
-                                <th>Preference {{ i }}</th>
+                                <th>Attribute {{ i }}</th>
                             {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
-                        {% for preferences in preferencedimvals %}
                             <tr>
-                            {% for preference_dim_i in preferences %}
-                                    <td>
-                                        <span>
-                                            {{ preference_dim_i }}
-                                        </span>
-                                    </td>
+                                <td>
+                                    <label>Weight</label>
+                                </td>
+                            {% for preference in preferencedimvals %}
+                                <td>
+                                    <span>
+                                        {{ preference}}
+                                    </span>
+                                </td>
                             {% endfor %}
                             </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
-                </p>
-                <p>
-                    Each of the products' shown attributes are displayed in the following table.
-                </p>
-                <p>
-                    (TESTING: the full productdims matrix is {{ productdimvals }})
-                </p>
+            </p>
             <p>As a reminder:</p>
             <ul>
-                <li>Each product has multiple attributes, but not all of them are listed.</li>
-                <li>Your preference for every attribute is shown in your preference dimensions above.</li>
-            </ul>
+                <li>Each product has multiple attributes, but not all of them are shown.</li>
+                <li>Your preference for every attribute is shown in your preference profile above.</li>
+            </ul>             
                 <p>
-                    Please choose a product.
+                Each of the products' (shown) attributes are displayed in the following table.
+                </p>
+                <p>
+                Please choose what you think the best product is, according to your preference profile and the attribute values of each product:
                 </p>
         </div>
         <div class="col">

@@ -1,0 +1,98 @@
+section{
+    min-height: 200px;
+}
+.col{
+    max-width: 435px;
+    padding: 0 0 0 15px;
+}
+.col:first-child{
+    padding: 0 15px 0 0;
+}
+table{
+    margin-left: 48px;
+    width: 300px;
+}
+table th{
+    white-space:nowrap;
+    font-size:12px;
+    padding: 6px 6px 4px;
+}
+table th:first-child{
+    font-weight: normal;
+    font-size:11px;
+    padding-left:3px;
+}
+
+td label{
+    color: #888;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0 10px 0 0;
+    min-width: 16px;
+    text-align: right;
+}
+td{
+    padding: 8px 22px 0 0;
+    text-align: right;
+    font-size: 17px;
+}
+td:first-child{
+    padding-right:0;
+
+}
+td:first-child label{
+    font-size:12.5px;
+    
+}
+#buyer-choice-radios{
+    float: left;
+    position: relative;
+    width: 333px;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+#buyer-choice-radios .controls{
+    border: 1px solid #5b616b;
+    float: left;
+    position: relative;
+    width: 100%;
+    border-radius: 4px;
+}
+.field-contract_seller_rolenum input{
+    cursor: pointer;
+}
+.field-contract_seller_rolenum label{
+    position: relative;
+    float: left;
+    /*background-color: #bbb;*/
+    padding: 10px 8px 9px 0;
+    cursor: pointer;
+    font-size:19px;
+    margin: 0 0 0 2px;
+    background-color: #DBEDD4;
+    color: black;
+    font-size: 16px;
+    width: 92px;
+    border-width: 0 1px;
+}
+.field-contract_seller_rolenum label:hover{
+    /*background-color: #ccc;*/
+    background-color: #ADDC91;
+}
+.field-contract_seller_rolenum td{
+    padding: 0;
+}
+.field-contract_seller_rolenum td:first-child{
+    font-size:14px;
+    padding: 0 4px 0 0;
+}
+
+p{
+    /*min-width: 405px;*/
+}
+tr:last-child td:nth-child(2) label{
+    border-left: 1px solid #ADDC91;
+}
+tr.one_dim td{
+    padding: 8px 4px 6px;
+}

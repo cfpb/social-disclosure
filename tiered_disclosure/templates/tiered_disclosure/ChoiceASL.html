@@ -3,9 +3,9 @@
 
 {% block title %}
     {% if subsession.practiceround %}
-        Practice Round
+        Practice Round (ASL)
     {% else %}
-        Round {{ round }} of {{ treatmentrounds }}
+        Round {{ round }} of {{ treatmentrounds }} (ASL)
     {% endif %}
 {% endblock %}
 
@@ -30,48 +30,52 @@
                         <tr>
                             <th></th>
                             {% for i in preferences_list %}
-                                <th>Preference {{ i }}</th>
+                                <th>Attribute {{ i }}</th>
                             {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
-                        {% for preferences in preferencedims %}
                             <tr>
-                            {% for preference_dim_i in preferences %}
-                                    <td>
-                                        <span>
-                                            {{ preference_dim_i }}
-                                        </span>
-                                    </td>
+                                <td>
+                                    <label></label>
+                                </td>
+                            {% for preference_dim_i in preferencedims %}
+                                <td>
+                                    <span>
+                                        {{ preference_dim_i }}
+                                    </span>
+                                </td>
                             {% endfor %}
                             </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
             </p>
             <p>
-                The preference profiles of {{ num_representatives }} other individuals for the product dimensions are:
+                The preference profiles of {{ num_representatives }} other individuals for the product attributes are:
                 <table id = "representatives">
                     <thead>
                         <tr>
                             <th></th>
                             {% for i in representatives_list %}
-                                <th>Guy{{ i }}</th>
+                                <th>Representative {{ i }}</th>
                             {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
-                        {% for preferences in representativedimvals_transposed %}
+                            {% for preferences in representativedimvals_transposed %}
                             <tr>
-                            {% for representative_dim_i in preferences %}
-                                    <td>
-                                        <span>
-                                            {{ representative_dim_i }}
-                                        </span>
-                                    </td>
-                            {% endfor %}
+                                <td>
+                                    <label>Attribute {{ forloop.counter }}</label>
+                                </td>
+                                {% for representative_dim_i in preferences %}
+                                <td>
+                                    <span>
+                                        {{ representative_dim_i }}
+                                    </span>
+                                </td>
+                                {% endfor %}
                             </tr>
-                        {% endfor %}
+                            {% endfor %}
                     </tbody>
                 </table>
             </p>
@@ -89,6 +93,9 @@
                     <tbody>
                         {% for utilities in utility_dims %}
                             <tr>
+                                <td>
+                                    <label>Representative {{ forloop.counter }}</label>
+                                </td>
                             {% for representative_utility in utilities %}
                                     <td>
                                         <span>
@@ -106,10 +113,10 @@
                 <li>There are {{ products_total }} products in this round.</li>
                 <li>Each product has {{ productdims_total }} attributes that are not shown to you.</li>
                 <li>Your preference for these attributes are shown in your preference profile.</li>
-                <li>The preference profiles of {{ num_representatives }} other individuals are also shown</li>
+                <li>The preference profiles of {{ num_representatives }} other individuals are also shown.</li>
                 <li>How much value the products give each of the three other individuals is determined by their preference profile.</li>
             </ul>
-            <p>Based on your preference profile, please choose the product which would give you the most benefit.</p>
+            <p>Based on your preference profile, please choose the product which would maximize your utility.</p>
         </div>
         <div class="col">
             {% include "tiered_disclosure/parts/aslChoicePart.html" %}

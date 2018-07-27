@@ -1,6 +1,5 @@
 {% extends "global/Base.html" %}
 {% load staticfiles otree_tags %}
-{% load otree static %}
 {% block title %}
     Experiment Basics
 {% endblock %}
@@ -31,10 +30,10 @@
 	            </section>
 	            <section>
 	                <p>
-	                    As advertised, you will be given {{ showup }} today regardless of your performance in the experiment.
+	                    As advertised, you will be given ( {{ showup }} ) today regardless of your performance in the experiment.
 	                </p>
 	                <p>
-	                    In addition, in the experiment you will earn "tokens".  For every {{ tokens_per_dollar }} tokens you earn, you will be paid $1.00 in cash.  You will be paid in private at the end of the experiment.
+	                    In addition, in the experiment you will earn "utility".  For every ( {{ tokens_per_dollar }} ) utils you earn, you will be paid $1.00 in cash.  You will be paid in private at the end of the experiment.
 	                </p>
 	            </section>
 	        </div>

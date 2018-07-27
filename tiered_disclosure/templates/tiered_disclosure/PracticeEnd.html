@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    {% if subsession.block = 1 %}
+    {% if subsession.block == 2 %}
         <p>We will now begin the paid rounds for this game.</p>
     {% endif %}
     <p>
@@ -21,12 +21,32 @@
         If you have any questions during the paid rounds, please raise your hand and someone will assist you in private.
     </p>
 
-    {% if session.config.experimenter_present == False %}
-        <nav>
-            <button class="a-btn next">Next</button>
-            <input type="submit"></input>
-        </nav>
-    {% endif %}
+    <nav>
+        <div id="next">
+            <button style="height:47px" value="Next" class="btn btn-primary btn-lg">Next</button>
+        </div>
+    <!--     <input type="button" class="a-btn next" value="Next"></input>
+     -->
+    </nav>
 
 
+{% endblock %}
+
+{% block styles %}
+    <style>
+        #privacytext {
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 18px;
+            color: #333;
+            background-color: #fff;
+        }
+        #title {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        #next {
+            margin-top: 20px;
+        }
+
+    </style>
 {% endblock %}
