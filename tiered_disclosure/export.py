@@ -82,15 +82,17 @@ def export_contracts():
     # Create the header list
     session_fns, session_fns_d, group_fns, participant_fns, participant_fns_d = get_headers_simple()
     player_fns = []
-    subsession_fns = ["round_number", "treatment", "practiceround", "realround", "is_asl", "num_representatives", "num_products", "num_prefdims", "productdims_total", "productdims_shown", "productdimvals"]
+    subsession_fns = ["round_number", "treatment", "practiceround", "realround", "is_asl", "num_representatives", "num_products", "num_prefdims", "productdims_total", "productdims_shown", "product_best",]
     # subsession_fns = ["round_number", "treatment", "practiceround", "realround", "num_products", "num_prefdims", "productdims_total", "productdims_shown", "product_selected", "is_mistake", "product_best"]
 
-    player_fns_d = ["basics_q1","product_selected", "is_mistake", "product_best"]
+    player_fns_d = ["basics_q1", "product_selected", "is_mistake",]
     d = dict(enumerate(string.ascii_lowercase, 1)) #converts number to alphabet
     # prefdim_fns = ["prefdim_" + str(d[i]) for i in range(1, maxprefdim + 1)]
     # proddim_fns = ["prod_" + str(i) + "dim_" + str(d[j]) for i in range(1, maxproduct + 1) for j in range(1, maxproductdim + 1)]
-    # playerutil_fns = ["util_prod" + str(i) for i in range(1, maxproduct+1)]
-    
+    # util_fns = ["util_prod" + str(i) for i in range(1, maxproduct+1)]
+    proddim_fns = ["products_round" + str(i+1) for i in range(Constants.num_rounds)]
+    prefdim_fns = ["preferences_round" + str(i+1) for i in range(Constants.num_rounds)]
+    util_fns = ["utilities_round" + str(i+1) for i in range(Constants.num_rounds)]
     sessions = Session.objects.order_by("code")
     for session in sessions:
         # if not session.config["name"] == "duopoly_rep_treat":
@@ -98,11 +100,14 @@ def export_contracts():
         session_list = list_from_obj(session_fns, session)
         proddim_list = []
         prefdim_list = []
-        # for i in range(Constants.num_rounds):
-        #         proddims_in_round = session.vars["productdims_round" + str(i+1)]
-        #         proddim_list.append(proddims_in_round)
-        #         prefdims_in_round = session.vars["preferencedims_round" + str(i+1)]
-        #         prefdim_list.append(prefdims_in_round)
+        util_list = []
+        for i in range(Constants.num_rounds):
+                proddims_in_round = session.vars["productdims_round" + str(i+1)]
+                proddim_list.append(proddims_in_round)
+                prefdims_in_round = session.vars["preferencedims_round" + str(i+1)]
+                prefdim_list.append(prefdims_in_round)
+                utils_in_round = session.vars["productutilities_round" + str(i+1)]
+                util_list.append(utils_in_round)
         # I believe this method excludes subsessions from other apps, and thus we do not need to filter on app name
         subsessions = Subsession.objects.filter(session=session)
         for subsession in subsessions:
@@ -115,9 +120,9 @@ def export_contracts():
             for player in players:
                 player_list = list_from_obj(player_fns_d, player)
 
-            body.append(session_list + subsession_list + player_list) #+ proddim_list + prefdim_list)
+            body.append(session_list + subsession_list + player_list + proddim_list + prefdim_list + util_list)
 
 
-    headers = session_fns_d + subsession_fns + player_fns_d + proddim_fns + prefdim_fns
+    headers = session_fns_d + subsession_fns + player_fns_d + proddim_fns + prefdim_fns + util_fns
 
     return headers, body

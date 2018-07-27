@@ -28,10 +28,10 @@ class Constants(BaseConstants):
 
     ##############################################
     productdims_total = [3, 3, 3, 3]
-    productdims_shown = [2, -1, 2, -1]
+    productdims_shown = [2, 0, 2, 0]
     num_prefdims = [3, 3, 3, 3]
     num_products = [3, 3, 6, 6]
-    num_representatives = [-1, 2, -1, 2]
+    num_representatives = [0, 2, 0, 2]
     asl_flag = [0,1,0,1]
     practicerounds = [True, True, True, True]
     num_rounds_treatment = [2,2,2,2]
@@ -80,7 +80,8 @@ class Subsession(BaseSubsession):
     bool_best_prod = models.IntegerField(doc="1 if the participant selected optimal product")
     product_best = models.IntegerField(doc="ID of product which maximizes utility for participant")
     is_mistake = models.IntegerField(doc="True if the participant selected not optimal product")
-
+    
+    productdims_round = models.IntegerField(doc="dimensions of ")
 
     def vars_for_admin_report(self):
         return {"session_code": self.session.code,
@@ -165,6 +166,7 @@ class Subsession(BaseSubsession):
         self.session.vars["productdims_round" + str(self.round_number)] = product_dims
         self.session.vars["productutilities_round" + str(self.round_number)] = product_utilities
         product_best = determine_bestproduct(product_utilities)["bestproduct"]
+        self.product_best = product_best
 
         self.session.vars["bestproduct_round" + str(self.round_number)] = product_best
 
@@ -198,12 +200,12 @@ class Subsession(BaseSubsession):
         if self.practiceround:
             self.session.vars["practice_proddims" + str(self.round_number)] = []
 
-
+        # self.productdims_round = self.session.vars["productdims_shown_round" + str(self.round_number)]
 
 class Player(BasePlayer):
     #Instruction Questions
     basics_q1 = models.CharField(doc = "Instructions quiz, basics")
-    basics_q2 = models.CharField(doc = "Instructions quiz, basics 2")
+    # basics_q2 = models.CharField(doc = "Instructions quiz, basics 2")
 
     product_selected = models.IntegerField(doc="ID of product selected by participant")
     product_best = models.IntegerField(doc = "ID of project that is utility maximizing for participant")

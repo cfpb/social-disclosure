@@ -71,9 +71,9 @@
     </div>
         <p>The total utility received from the product you selected is {{ utility_selected }}. </p>
     {% if product_selected == product_best %}
-        <p>Based on your preference profile, you selected the product which maximizes your utility.</p>
+        <p>Based on your preference profile in this round, you selected the product which maximizes your utility.</p>
     {% else %}
-        <p>Based on your preference profile, you did not select the product which would have maximized your utility.</p>
+        <p>Based on your preference profile in this round, you did not select the product which would have maximized your utility.</p>
         <p>The product which would have maximized your utility was product:
                 <table id = "product_best">
                         <thead>
@@ -113,7 +113,7 @@
             {% for dimensions in productdimvals_transposed%}
                 <tr>
                     <td>
-                        <label></label>
+                        <label>Attribute {{ forloop.counter }}</label>
                     </td>
                 {% for product_dim_i in dimensions%}
                     <td>

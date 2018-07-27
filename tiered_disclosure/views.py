@@ -143,7 +143,7 @@ class ChoiceTruncation(Page):
 			"proddim_fns": proddim_fns,
 
 			"round": roundnum,
-            "treatmentrounds": Constants.num_rounds_treatment[self.subsession.block - 1]
+            "treatmentrounds": Constants.num_rounds_treatment[self.subsession.block - 1],
 
             "block": self.subsession.block,
 		}
@@ -200,8 +200,7 @@ class ChoiceASL(Page):
 		products_list = list(range(1, products_total + 1))
         # numpracticerounds = sum(Constants.num_rounds_practice[:self.subsession.block])
 		roundnum = self.subsession.round_number - numpracticerounds - numtreatrounds
-	def before_next_page(self):
-		pass
+
 		return {
 			"num_representatives": num_representatives,
 			"representativedimvals": representativedimvals,
@@ -221,6 +220,8 @@ class ChoiceASL(Page):
 			"round": roundnum,
             "treatmentrounds": Constants.num_rounds_treatment[self.subsession.block - 1] 
 		}
+		def before_next_page(self):
+			pass
 
 
 class RoundResults(Page):
@@ -258,7 +259,7 @@ class RoundResults(Page):
 
 		self.player.is_mistake = is_mistake
 		self.player.product_best = product_best
-		
+
 		# productdims_list = list(range(1, productdims_shown + 1))
 		# if self.subsession.practiceround:
 		# 	products = self.participant.vars["practice_proddims" + str(self.subsession.round_number)]
@@ -278,7 +279,6 @@ class RoundResults(Page):
 
 		# products_list = list(zip(range(1, self.subsession.productdims_total + 1), zip(*product_dims)))
 		return {
-			"num_representatives": num_representatives,
 			"is_asl": self.subsession.is_asl,
 			"is_mistake": is_mistake,
 			"preferencedims": preferencedims,

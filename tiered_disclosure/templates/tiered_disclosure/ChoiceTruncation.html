@@ -31,24 +31,22 @@
                     <thead>
                         <tr>
                             <th></th>
-                            {% for i in preferences_list %}
-                                <th>Attribute {{ i }}</th>
-                            {% endfor %}
+                            <th>Your Preference Profile</th>
                         </tr>
                     </thead>
                     <tbody>
+                            {% for preference_dim_i in preferencedims %}
                             <tr>
                                 <td>
-                                    <label>Weight</label>
+                                    <label>Attribute {{ forloop.counter }}</label>
                                 </td>
-                            {% for preference in preferencedimvals %}
                                 <td>
                                     <span>
-                                        {{ preference}}
+                                        {{ preference_dim_i }}
                                     </span>
                                 </td>
-                            {% endfor %}
                             </tr>
+                            {% endfor %}
                     </tbody>
                 </table>
             </p>

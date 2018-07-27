@@ -20,33 +20,33 @@
     <div class="col_container">
         <div class="col realround_instructions">
             <p>
-                There are {{ products_total }} products in this round. Each product has {{ productdims_total }} attributes which are not shown.
-                (TESTING: the full productdims matrix is {{ productdimvals }})
+                There are {{ products_total }} products in this round. 
             </p>
             <p>
-                Your preference profile for each product's {{ productdims_total }} attributes are:
+            Each product has {{ productdims_total }} attributes which are not shown.
+            </p>
+            <p>
+                Your preference for each product attribute is:
                 <table id = "preferences">
                     <thead>
                         <tr>
                             <th></th>
-                            {% for i in preferences_list %}
-                                <th>Attribute {{ i }}</th>
-                            {% endfor %}
+                            <th>Your Preference Profile</th>
                         </tr>
                     </thead>
                     <tbody>
+                            {% for preference_dim_i in preferencedims %}
                             <tr>
                                 <td>
-                                    <label></label>
+                                    <label>Attribute {{ forloop.counter }}</label>
                                 </td>
-                            {% for preference_dim_i in preferencedims %}
                                 <td>
                                     <span>
                                         {{ preference_dim_i }}
                                     </span>
                                 </td>
-                            {% endfor %}
                             </tr>
+                            {% endfor %}
                     </tbody>
                 </table>
             </p>
@@ -86,7 +86,7 @@
                         <tr>
                             <th></th>
                             {% for i in products_list %}
-                                <th>Product {{ i }}</th>
+                                <th>Product {{ i }} Utility</th>
                             {% endfor %}
                         </tr>
                     </thead>

@@ -25,7 +25,19 @@
                 {% endfor %}
                 </tr>
             {% endfor %}
-            <tr>
+                <tr>
+                    <td>
+                        <label>Attribute 3</label>
+                    </td>
+                    {% for i in products_list %}
+                    <td>
+                        <span>
+                            Hidden
+                        </span>
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
                 <th></th>
                 {% for i in products_list %}
                     <td>
