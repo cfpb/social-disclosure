@@ -1,24 +1,127 @@
 {% extends "global/Base.html" %}
 {% load staticfiles otree_tags %}
 {% block title %}
-    Instructions Full Information
+    Instructions
 {% endblock %}
 
   {% block content %}
-  	<table class="centerer"><tbody><tr><td>
+      <div class="col_container">
   	        <div>
-
-  	            <section>
   	                <p>
-                      You will be assigned a preference profile and asked to choose one (1) product from a list of products. Each product gives you a certain amount of tokens, determined by the interaction of the product's attributes and your preference profile. </p>
+                      In each round, you will be assigned a preference profile and asked to choose one (1) product from a list of products. Each product gives you a certain amount of tokens, determined by the interaction of the product's attributes and your preference profile. </p>
   	                <p>
-                      As an example, if your preference profile were the following: ((table)) This means that you value attribute A with intensity 1, attribute B with intensity 2, and attribute C with intensity 3.
+                      As an example, if your preference profile were the following:
+                    </p>
+                    <p>
+                      <table id = "preferences">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Your Preference Profile</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>
+                                        <label>Attribute A </label>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            1
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Attribute B </label>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            2
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Attribute C </label>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            3
+                                        </span>
+                                    </td>
+                                </tr>
+                        </tbody>
+                      </table>
+                    </p>
+                    <p>
+                      This means that you value attribute A with intensity 1, attribute B with intensity 2, and attribute C with intensity 3.
   	                </p>
   	                <p>
                       If you were shown two products, product 1 and product 2, which had different attribute values as shown in the following table:
-  	                </p>
+                    </p>
                     <p>
-                      Then you would receive 1*5+2*1+3*1=10 tokens for product 1, and 1*1+2*1+3*3=12 tokens for product 2. The best choice for you would be product 2, in this example, because you receive more tokens from product 2 than product 1.
+                      <table id = "products">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Product 1</th>
+                                <th>Product 2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>
+                                        <label>Attribute A </label>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            5
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            1
+                                        </span>
+                                    </td>                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Attribute B </label>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            1
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            1
+                                        </span>
+                                    </td>                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Attribute C </label>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            1
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            3
+                                        </span>
+                                    </td>                                    
+                                </tr>
+                        </tbody>
+                      </table>
+                    </p>
+                    <p>
+                      Then you would receive 1*5+2*1+3*1=10 tokens for product 1, and 1*1+2*1+3*3=12 tokens for product 2. The best choice for you would be product 2 in this round because you would receive more tokens from product 2 than product 1.
+                    <p> 
+                      Remember, at the end of the experiment, the tokens you earned in each round will be converted to dollars at a fixed exchange rate.
   	            </section>
   	        </div>
   	    </td></tr></tbody></table>
@@ -29,22 +132,7 @@
   </nav>
 
 
-  {% endblock %}
-  {% block styles %}
-  	<style>
-  		#privacytext {
-  			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-      		font-size: 18px;
-   	   		color: #333;
-     	 		background-color: #fff;
-  		}
-  		#title {
-  			font-weight: bold;
-  			margin-bottom: 20px;
-  		}
-  		#next {
-  			margin-top: 20px;
-  		}
-
-      </style>
+{% endblock %}
+{% block styles %}
+   <link href="{% static "tiered_disclosure/Truncation.css" %}" rel="stylesheet">
 {% endblock %}

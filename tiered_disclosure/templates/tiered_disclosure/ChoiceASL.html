@@ -23,7 +23,7 @@
                 There are {{ products_total }} products in this round. 
             </p>
             <p>
-            Each product has {{ productdims_total }} attributes which are not shown.
+            Each product has {{ productdims_total }} attributes. In this round, none of the product attributes are shown to you (all of them are hidden).
             </p>
             <p>
                 Your preference for each product attribute is:
@@ -51,13 +51,13 @@
                 </table>
             </p>
             <p>
-                The preference profiles of {{ num_representatives }} other individuals for the product attributes are:
+                For comparison, the preference profiles of {{ num_representatives }} other individuals for the same {{ products_total }} products are:
                 <table id = "representatives">
                     <thead>
                         <tr>
                             <th></th>
                             {% for i in representatives_list %}
-                                <th>Representative {{ i }}</th>
+                                <th>Individual {{ i }}</th>
                             {% endfor %}
                         </tr>
                     </thead>
@@ -111,12 +111,12 @@
             <p>As a reminder:</p>
             <ul>
                 <li>There are {{ products_total }} products in this round.</li>
-                <li>Each product has {{ productdims_total }} attributes that are not shown to you.</li>
+                <li>Each product has {{ productdims_total }} attributes, none of which are shown to you.</li>
                 <li>Your preference for these attributes are shown in your preference profile.</li>
-                <li>The preference profiles of {{ num_representatives }} other individuals are also shown.</li>
-                <li>How much value the products give each of the three other individuals is determined by their preference profile.</li>
+                <li>For comparison, the preference profiles of {{ num_representatives }} other individuals are shown.</li>
+                <li>How much each each of the {{ num_representatives }} other individuals value each product is determined by their preference profile, in the same manner that each product's value was calculated for you in the previous round.</li>
             </ul>
-            <p>Based on your preference profile, please choose the product which would maximize your utility.</p>
+            <p>Based on your preference profile and comparing how much each of the {{ num_representatives }} other individuals value each product, please choose the product which would maximize your utility.</p>
         </div>
         <div class="col">
             {% include "tiered_disclosure/parts/aslChoicePart.html" %}

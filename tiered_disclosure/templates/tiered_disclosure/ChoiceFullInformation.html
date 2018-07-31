@@ -3,9 +3,9 @@
 
 {% block title %}
     {% if subsession.practiceround %}
-        Practice Round
+        Practice Round (Full Information)
     {% else %}
-        Round {{ round }} of {{ treatmentrounds }}
+        Round {{ round }} of {{ treatmentrounds }} (Full Information)
     {% endif %}
 {% endblock %}
 
@@ -20,19 +20,43 @@
     <div class="col_container">
         <div class="col realround_instructions">
             <p>
-                There are {{ products_total }} products in this round. Each product has {{ productdims_total }} attributes. The product attribute values are as follows: {{ productdimvals_shown }}
+                There are {{ products_total }} products in this round. 
+            <p>
+                Each product has {{ productdims_total }} attributes. 
             </p>
             <p>
-                Your preference profile is as follows: {{ preferencedims }}
+                Your preference for each product attribute is: 
+                <table id = "preferences">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Your Preference Profile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {% for preference_dim_i in preferencedimvals %}
+                            <tr>
+                                <td>
+                                    <label>Attribute {{ forloop.counter }}</label>
+                                </td>
+                                <td>
+                                    <span>
+                                        {{ preference_dim_i }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
             </p>
             <p>
             </p>
             <p>As a reminder:</p>
             <ul>
                 <li>Each product has multiple attributes.</li>
-                <li>Your preference for these attributes are shown in your preference profile.</li>
+                <li>Your preference for every attribute is shown in your preference profile above.</li>
             </ul>
-            <p>Please choose a product.<p>
+            <p>Please choose what you think the best product is, in terms of maximizing the number of tokens you will receive, according to your preference profile and the attribute values of each product:<p>
         </div>
         <div class="col">
             {% include "tiered_disclosure/parts/fullinformationChoicePart.html" %}

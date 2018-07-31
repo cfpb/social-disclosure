@@ -69,11 +69,11 @@
                 </table>
         </p>
     </div>
-        <p>The total utility received from the product you selected is {{ utility_selected }}. </p>
+        <p>The total tokens received from the product you selected is {{ utility_selected }}. </p>
     {% if product_selected == product_best %}
-        <p>Based on your preference profile in this round, you selected the product which maximizes your utility.</p>
+        <p>Based on your preference profile in this round, you selected the product which maximizes your tokens.</p>
     {% else %}
-        <p>Based on your preference profile in this round, you did not select the product which would have maximized your utility.</p>
+        <p>Based on your preference profile in this round, you did not select the product which would have maximized your tokens.</p>
         <p>The product which would have maximized your utility was product:
                 <table id = "product_best">
                         <thead>
@@ -97,7 +97,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            which would have given you {{ utility_best }} utils.</p>
+            which would have given you {{ utility_best }} tokens.</p>
     {% endif %}
     <p>Here is a table of the full list of attributes for each product that was in this round:</p>
     <table id = "products">

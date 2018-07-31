@@ -23,7 +23,7 @@
                 There are {{ products_total }} products in this round.
             </p>
             <p>
-                Each product has {{ productdims_total }} total attributes but only {{ productdims_shown }} of those attributes are shown to you.
+                Each product has {{ productdims_total }} total attributes but only {{ productdims_shown }} of those attributes are shown to you (1 is hidden).
             </p>
             <p>
                 Your preference for each product attribute is:
@@ -35,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            {% for preference_dim_i in preferencedims %}
+                            {% for preference_dim_i in preferencedimvals %}
                             <tr>
                                 <td>
                                     <label>Attribute {{ forloop.counter }}</label>
@@ -53,13 +53,14 @@
             <p>As a reminder:</p>
             <ul>
                 <li>Each product has multiple attributes, but not all of them are shown.</li>
-                <li>Your preference for every attribute is shown in your preference profile above.</li>
+                <li>Your preference for every attribute is shown in your preference profile above</li>
+                <li>The amount of tokens you receive is determined by multiplying each attribute value with its preference value, and then adding them together.</li>
             </ul>             
                 <p>
                 Each of the products' (shown) attributes are displayed in the following table.
                 </p>
                 <p>
-                Please choose what you think the best product is, according to your preference profile and the attribute values of each product:
+                Please choose what you think the best product is, in terms of maximizing the number of tokens you will receive, according to your preference profile and the shown attribute values of each product:
                 </p>
         </div>
         <div class="col">
