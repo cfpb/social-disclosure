@@ -400,6 +400,10 @@ class RoundResults(Page):
 			"practice_round:": self.subsession.practiceround,
 		}
 
+class Splash(Page):
+    form_model = models.Player
+    form_fields = [ ]
+
 # @login_required
 def DataDownload(request):
 	headers, body = export.export_contracts()

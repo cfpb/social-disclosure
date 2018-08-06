@@ -33,8 +33,8 @@ class Constants(BaseConstants):
     num_products = [3, 3, 6, 6]
     num_representatives = [0, 2, 0, 2]
     asl_flag = [0,1,0,1]
-    practicerounds = [True, True, True, True]
-    num_rounds_treatment = [2,2,2,2]
+    practicerounds = [True, True, False, False]
+    num_rounds_treatment = [2,2,1,1]
     ##############################################
 
     # OTHER PARAMETERS
@@ -47,7 +47,7 @@ class Constants(BaseConstants):
 
     num_rounds_practice = []
     for i in range(len(practicerounds)):
-        num_rounds_practice.append(2 * int(practicerounds[i])) # one rounds of practice whenever practicerounds==1
+        num_rounds_practice.append(2 * int(practicerounds[i])) # two rounds of practice whenever practicerounds==1
     num_rounds = sum(num_rounds_treatment) + sum(num_rounds_practice)
     # choice_number = [x + 1 for x in range(max(num_products))]
     # choice_string = ["Product " + str(i) for i in choice_number]
@@ -151,7 +151,8 @@ class Subsession(BaseSubsession):
         self.session.vars["productdims_round" + str(self.round_number)] = []
         self.session.vars["preferencedims_round" + str(self.round_number)] = []
 
-        #set preference profile values for participant
+
+        #set preference profile values AND UTILITY values for each round
         preference_dims = []
         preferences = set_prefdims(self.preferences)["prefdims"]
         preference_dims.append(preferences)

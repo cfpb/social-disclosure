@@ -69,11 +69,13 @@
                 </table>
         </p>
     </div>
-        <p>The total tokens received from the product you selected is {{ utility_selected }}. </p>
+        <p>
+            The total tokens received from product {{ product_selected }} is {{ utility_selected }}.
+        </p>
     {% if product_selected == product_best %}
-        <p>Based on your preference profile in this round, you selected the product which maximizes your tokens.</p>
+        <p>You selected the product which gave you the most possible tokens in this round.</p>
     {% else %}
-        <p>Based on your preference profile in this round, you did not select the product which would have maximized your tokens.</p>
+        <p>Based on your preference profile in this round, you did not select the product which would have given you the most tokens in this round.</p>
         <p>The product which would have maximized your utility was product:
                 <table id = "product_best">
                         <thead>
@@ -126,6 +128,34 @@
             {% endfor %}
         </tbody>
     </table>
+</p>
+    <p>
+        And a table of the tokens each product would have given you in this round:
+        <table id = "utilities">
+            <thead>
+                <tr>
+                    <th></th>
+                    {% for i in products_list %}
+                        <th>Product {{ i }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>
+                            <label>Tokens</label>
+                        </td>
+                    {% for utility in utilities_list %}
+                        <td>
+                            <span>
+                                {{ utility }}
+                            </span>
+                        </td>
+                    {% endfor %}
+                    </tr>
+            </tbody>
+         </table>
+     </p>
     <p>Press next to continue to the next round.</p>
     {% next_button %}
 {% endblock %}

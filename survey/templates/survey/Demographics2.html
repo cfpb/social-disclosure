@@ -1,0 +1,42 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        Please indicate if you have taken college-level coursework in any of the following fields. (Mark all that apply)
+    </p>
+
+    <table class="table">
+        <tr>
+            <th>Course</th><th>Yes</th><th>No</th>
+        </tr>
+        <tr>
+            <td>Microeconomics or game theory</td>
+            <td><input type="radio" name="q_course_micro" value="True" required</td>
+            <td><input type="radio" name="q_course_micro" value="False" required</td>
+        </tr>
+        <tr>
+            <td>Marketing or business</td>
+            <td><input type="radio" name="q_course_mkt" value="True" required</td>
+            <td><input type="radio" name="q_course_mkt" value="False" required</td>
+        </tr>
+        <tr>
+            <td>Law</td>
+            <td><input type="radio" name="q_course_law" value="True" required</td>
+            <td><input type="radio" name="q_course_law" value="False" required</td>
+        </tr>
+    </table>
+
+    <nav>
+        <button class="a-btn next">Next</button>
+    </nav>
+
+{% endblock %}
+{% block app_styles %}
+   <link href="{% static "duopoly_rep_treat/quiz.css" %}" rel="stylesheet">
+{% endblock %}

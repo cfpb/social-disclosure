@@ -1,0 +1,21 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+
+    
+    {% formfield player.q_risk3 %}
+
+    <nav>
+        <button class="a-btn next">Next</button>
+    </nav>
+
+{% endblock %}
+{% block app_styles %}
+   <link href="{% static "duopoly_rep_treat/quiz.css" %}" rel="stylesheet">
+{% endblock %}

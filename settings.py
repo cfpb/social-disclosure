@@ -123,11 +123,22 @@ mturk_hit_settings = {
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 0.00,
+    'real_world_currency_per_point': (1.00/550),
     'participation_fee': 5.00,
+    'num_bots': 12,
     'doc': "",
     'mturk_hit_settings': mturk_hit_settings,
 }
+
+ROOMS=[
+    {
+        'name': 'Gettysburg',
+        'display_name': 'Gettysburg Econ Lab',
+        'participant_label_file': 'tiered_disclosure/participant_labels.txt',
+        'use_secure_urls': True,
+    }
+]
+
 
 SESSION_CONFIGS = [
     # {
@@ -152,9 +163,12 @@ SESSION_CONFIGS = [
         'use_browser_bots' : False,
         'app_sequence': [
             'tiered_disclosure',
+            'survey'
         ],
-        'real_world_currency_per_point': (1.00/700), #CHANGE
-        'num_demo_participants': 1, 
+        'participation_fee': 10,
+        'real_world_currency_per_point': (1.00/700), #TODO: CHANGE
+        'num_demo_participants': 12,
+        'experimenter_present': True, # set false to show "Next" button on ALL pages. 
         'treatmentorder': '1,2,3,4',
         'doc': """
         Specify treatmentorder with no spaces, and numbers separated by commas. Treatments are as follows:\n\n

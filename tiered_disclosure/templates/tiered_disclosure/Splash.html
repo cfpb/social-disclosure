@@ -1,0 +1,78 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Thank you!
+{% endblock %}
+
+{% block content %}
+
+	<div class="content">
+	    <p>
+	    	Thank you for your participation today.  Please wait patiently for the experimenter to call your participant number.  When your number is called, gather all of your belongings, and walk to where you will be paid.
+		</p>
+
+		<p class = "number">
+			Your participant number is {{ participant.label }}.
+		</p>
+
+		<p>
+			Please remember that this research is only valuable if all participants have the same experience.  Therefore, please do not discuss this experiment with others outside of the lab.
+	    </p>
+	</div>
+
+	<div id = "puzzle"></div>
+	<div id = "words"></div>
+	<input id="nextpuzzle" class="btn btn-info btn-large btn-primary next-button" type="button" value="New Puzzle"></input>
+
+
+{% endblock %}
+{% block app_styles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'duopoly_rep_treat/wordfindgame.css' %}">
+	<style type="text/css">
+	    .content p{
+	        font-size: 16px;
+	        margin-bottom: 8px;
+	    }
+	    p.number{
+	    	font-size: 22px;
+	    }
+	    #words{
+	    	padding: 25px 0 0 40px;
+	    	float: left;
+	    	position: relative;
+	    	height:auto;
+	    	column-count:1;
+	    	-moz-column-count:1;
+	    	min-width: 0;
+	    }
+	    #words ul{
+	    	padding: 0;
+	    	margin:0;
+	    	width: auto;
+	    	height: auto;
+	    	float: left;
+	    	position: relative;
+	    }
+	    #words li{
+	    	padding: 0 7px 0 0;
+	    	font-size: 16px;
+	    }
+	</style>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'duopoly_rep_treat/wordfind.js' %}"></script>
+    <script type="text/javascript" src="{% static 'duopoly_rep_treat/wordfindgame.js' %}"></script>
+    <script type="text/javascript" src="{% static 'duopoly_rep_treat/waitgame.js' %}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+        	var numWords = 17;
+            var gamePuzzle = wordfindgame.create(getRandomSubarray(words, numWords), '#puzzle', '#words');
+            $("#nextpuzzle").click(function(){
+                $(this).fadeOut();
+                wordfindgame.create(getRandomSubarray(words, numWords), "#puzzle", "#words");
+            });
+        });
+    </script>
+{% endblock %}

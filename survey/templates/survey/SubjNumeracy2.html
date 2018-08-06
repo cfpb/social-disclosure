@@ -1,0 +1,26 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        Please answer the following questions.
+    </p>
+
+    {% formfield player.q_subjNum4 %}
+    {% formfield player.q_subjNum5 %}
+    {% formfield player.q_subjNum6 %}
+    
+
+    <nav>
+        <button class="a-btn next">Next</button>
+    </nav>
+
+{% endblock %}
+{% block app_styles %}
+   <link href="{% static "duopoly_rep_treat/quiz.css" %}" rel="stylesheet">
+{% endblock %}

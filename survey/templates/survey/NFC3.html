@@ -1,0 +1,25 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        For each of the statements below, please indicate whether or not the statement is characteristic of you or of what you believe.
+    </p>
+    
+    {% formfield player.q_nfc7 %}
+    {% formfield player.q_nfc8 %}
+
+	<nav>
+        <button class="a-btn next">Next</button>
+    </nav>
+    
+
+{% endblock %}
+{% block app_styles %}
+   <link href="{% static "duopoly_rep_treat/quiz.css" %}" rel="stylesheet">
+{% endblock %}
