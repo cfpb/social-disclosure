@@ -4,7 +4,9 @@ from otree.api import (
 )
 
 import math, random, copy
-
+import csv
+import numpy as np
+import pandas as pd
 from otree.db.models import Model, ForeignKey
 
 author = 'Dustin Beckett, Daniel Banko'
@@ -26,7 +28,7 @@ class Constants(BaseConstants):
     num_rounds_treatment: number of paid rounds in each treatment
     """
 
-    ##############################################
+    #############################################
     productdims_total = [3, 3, 3, 3]
     productdims_shown = [2, 0, 2, 0]
     num_prefdims = [3, 3, 3, 3]
@@ -35,6 +37,17 @@ class Constants(BaseConstants):
     asl_flag = [0,1,0,1]
     practicerounds = [True, True, False, False]
     num_rounds_treatment = [2,2,1,1]
+    ############################################# 
+
+    ##############################################
+    # productdims_total = [3, 3, 3, 3]
+    # productdims_shown = [2, 0, 2, 0]
+    # num_prefdims = [3, 3, 3, 3]
+    # num_products = [3, 3, 6, 6]
+    # num_representatives = [0, 2, 0, 2]
+    # asl_flag = [0,1,0,1]
+    # practicerounds = [True, True, False, False]
+    # num_rounds_treatment = [2,2,1,1]
     ##############################################
 
     # OTHER PARAMETERS
@@ -104,6 +117,7 @@ class Subsession(BaseSubsession):
         num_rounds_practice = [Constants.num_rounds_practice[i] for i in treatmentorder]
 
         new_block_rounds = [sum(num_rounds_treatment[:i]) + sum(num_rounds_practice[:i]) + 1 for i in range(len(num_rounds_treatment) + 1)]
+        print("new_block_rounds = ", new_block_rounds)
         practice_rounds = [new_block_rounds[i] + j for i in range(len(new_block_rounds) - 1) for j in range(num_rounds_practice[i])]
 
         #  Determine if this is the first round of a new block. This is also used to display new instructions
@@ -117,7 +131,7 @@ class Subsession(BaseSubsession):
                 if self.round_number > new_block_rounds[i] and self.round_number < new_block_rounds[i+1]:
                     self.block = i + 1
                     break
-
+        print('round = ',self.round_number)
         self.treatment = self.block
         print("self.block = ", self.block)
         if self.round_number in practice_rounds:
@@ -151,48 +165,129 @@ class Subsession(BaseSubsession):
         self.session.vars["productdims_round" + str(self.round_number)] = []
         self.session.vars["preferencedims_round" + str(self.round_number)] = []
 
+        #do not delete
+        #set preference profile values and utility values for each round
+        # preference_dims = []
+        # preferences = set_prefdims(self.preferences)["prefdims"]
+        # preference_dims.append(preferences)
+        # self.session.vars["preferencedims_round" + str(self.round_number)] = preferences
+        # product_dims = []
+        # product_utilities = []
 
-        #set preference profile values AND UTILITY values for each round
+
+        # csv_data = import_params_from_csv("justvals.csv")['csv_data']
+        # print('productdimvals column in csv:')
+        num_rounds = Constants.num_rounds
+        current_round = self.round_number
+        round_index = current_round - 1
+        filename = "tiered_disclosure/my_data.csv"
+        data = pd.read_csv(filename, quotechar='"', skipinitialspace=True).to_dict()
+        products = data['productdimvals']
+        preferences = data['preferencedimvals']
+        representatives = data['representativedimvals']
+        print('num_rounds = ', num_rounds)
+        productdimvals = [data['productdimvals'][i].replace('[','').replace(']','').split(';') for i in range(num_rounds)]
+        preferencedimvals = [data['preferencedimvals'][i].replace('[','').replace(']','') for i in range(num_rounds)]
+        representativedimvals = [data['representativedimvals'][i].replace('[','').replace(']','') for i in range(num_rounds)]
         preference_dims = []
-        preferences = set_prefdims(self.preferences)["prefdims"]
-        preference_dims.append(preferences)
+        preference = preferencedimvals[round_index].split(' ')
+        preference_dims.append(preference)
         self.session.vars["preferencedims_round" + str(self.round_number)] = preferences
         product_dims = []
         product_utilities = []
+        print(num_rounds)
+        print(productdimvals)
         for i in range(self.num_products):
-            product = set_productdims(self.productdims_total)["productdims"]
+            product_index = i
+            products_list = productdimvals[round_index]
+            print(round_index)
+            print(product_index)
+            product = productdimvals[round_index][product_index].split(',') #YOU HAVE ROUNDS WITH MORE THAN THREE PRODUCTS SO YOU NEED TO MODIFY JUSTVALS TO FIT THOSE PRODUCTS IN!!!
             product_dims.append(product)
-            utility = calculate_utility(product, preferences)["totalutility"]
-            product_utilities.append(utility)
+            # utility = calculate_utility(product, preferences)["totalutility"]
+            # product_utilities.append(utility)
+
         self.session.vars["productdims_round" + str(self.round_number)] = product_dims
         self.session.vars["productutilities_round" + str(self.round_number)] = product_utilities
-        product_best = determine_bestproduct(product_utilities)["bestproduct"]
-        self.product_best = product_best
+        # product_best = determine_bestproduct(product_utilities)["bestproduct"]
+        # self.session.vars["bestproduct_round" + str(self.round_number)] = product_best
+        print(product_dims)
+        print(products_list)
+        # values_dict = import_params_from_csv("justvals.csv")['csv_dict']
 
-        self.session.vars["bestproduct_round" + str(self.round_number)] = product_best
+        # for row in values_dict:
+        # self.session.vars["productdims_round" + str(self.round_number)] = csv_data['productdimvals']
+
+        # productdimvals = group_by_field(csv_data)
+
+        # grouped = group_by_field(csv_data)
+
+        # print 'First closed location'
+        # print grouped[''][0], '\n\n'
+
+        # print 'Total number of closed locations'
+        # print len(grouped['Closed']), '\n\n'
+
+        # print('All productdimvals:', grouped.keys(), '\n\n')
+        # product_dims = productdimvals[self.round_number]
+        # self.session.vars["productdims_round" + str(self.round_number)] = product_dims
+
+        # products = csv_data['productdimvals']
+        # products_in_round = products[0]
+        # product = products_in_round[0]
+        # print('products')
+        # print(products)
+        # print(products[0])
+        # print(products[0][0])
+        # print('products_in_round')
+        # print(products_in_round)
+        # print(products_in_round[0])
+        # print('product')
+        # print(product)
+
+        # test = [[0,1,2],[1,3,2],[3,2,1]]
+        # test2 = test[0]
+        # print(test2)
+#do not delete:
+        # for i in range(self.num_products):
+        #     product = set_productdims(self.productdims_total)["productdims"]
+        #     product_dims.append(product)
+        #     utility = calculate_utility(product, preferences)["totalutility"]
+        #     product_utilities.append(utility)
+        # self.session.vars["productdims_round" + str(self.round_number)] = product_dims
+        # self.session.vars["productutilities_round" + str(self.round_number)] = product_utilities
+        # product_best = determine_bestproduct(product_utilities)["bestproduct"]
+        # self.product_best = product_best
+
+        # self.session.vars["bestproduct_round" + str(self.round_number)] = product_best
 
         if self.is_asl:
             representative_dims = []
             utility_reps = []
             # set representative values for asl rounds and calculate representative utility
             for i in range(self.representatives):
-                representative = set_representativedims(self.productdims_total)["representativedims"]
+                current_representative = i
+                representative_index = current_representative - 1
+                representative_list = representativedimvals[round_index]
+                # representative = set_representativedims(self.productdims_total)["representativedims"]
+                representative = representativedimvals[round_index][representative_index].split(',')
                 representative_dims.append(representative)
-                reputility = calculate_reputility(product_dims, representative)["representativeutility"]
-                utility_reps.append(reputility)
+                # reputility = calculate_reputility(product_dims, representative)["representativeutility"]
+                # utility_reps.append(reputility)
             self.session.vars["reputility_round" + str(self.round_number)] = utility_reps
             # self.session.vars["productdims_round" + str(self.round_number)] = representative_dims
             self.session.vars["representativedims_round" + str(self.round_number)] = representative_dims
         else:
             # set product dimension values for truncation rounds
             productdimvals_shown = []
-            for j in range(self.num_products):
+            for j in range(1):
                 truncatedvals = [0] * (self.productdims_shown)
-                for i in range(self.productdims_shown):
+                for i in range(1):
                     tval = -1
                     tval = product_dims[j][i]
                     truncatedvals[i] = tval
-                    # print("truncatedvals[i] is", truncatedvals[i])
+                    print(truncatedvals[i])
+                    print("truncatedvals[i] is", truncatedvals[i])
                 truncvalues = copy.copy(truncatedvals)
                 productdimvals_shown.append(truncvalues)
             self.session.vars["productdims_shown_round" + str(self.round_number)] = productdimvals_shown
@@ -222,6 +317,35 @@ class Product(Model): #custom model inherits from Django base class "Model". Bas
     #     for i in range(self.player.subsession.dims_per_product):
     #         pd = self.productdim_set.create(dimnum=i + 1, value=random.uniform(0,1))
     #         pd.save()
+
+def import_params_from_csv(filename):
+    data = pd.read_csv(filename, quotechar='"', skipinitialspace=True).to_dict()
+    products = data['productdimvals']
+    # data['productdimvals'][i].replace('[','').replace(']','').split(';')
+    print(products)
+    print(products[0])
+    print(products[1])
+    # reading csv file
+    # with open(filename, 'r') as csvfile:
+        # creating a csv reader object
+        # csvreader = csv.reader(csvfile)
+
+        # extracting field names through first row
+        # fields = next(csvreader)
+    csvfile = open(filename, 'r')
+    # data = np.genfromtxt(filename, delimiter=',', names=True)
+    data = pd.read_csv(filename, quotechar='"', skipinitialspace=True).to_dict()
+    csv_dict = csv.DictReader(csvfile) #new (I want this to be a dictionary which stores lists)
+    
+    for row in csv_dict:
+        csv_data.append(row)
+    csvfile.close()
+    return {
+        'csv_dict': csv_dict,
+        # 'csv_data': csv_data,
+        'csv_data': csv_data,
+    }
+
 
 def calculate_utility(productdimvals, prefdimvals):
     print('entering calculate_utility')
@@ -282,6 +406,54 @@ def set_productdims(numdims):
     return {
         'productdims': dvalues,
     }
+
+# def set_productdims_from_csv(filename, numdims):
+#     print('entering set_productdims')
+#     # csv file name
+#     # initializing the titles and rows list
+#     fields = []
+#     rows = []
+
+#     # reading csv file
+#     with open(filename, 'r') as csvfile:
+#         # creating a csv reader object
+#         csvreader = csv.reader(csvfile)
+#         fields = next(csvreader)
+#         reader = csv.DictReader(csvfile, fieldnames=fields)
+#         for row in reader:
+#             print(row['productdims_shown'],row['productdimvals'],row['round_num'])
+#         # extracting field names through first row
+
+
+#         # extracting each data row one by one
+#         for row in csvreader:
+#             rows.append(row)
+
+#         # get total number of rows
+#         print("Total no. of rows: %d"%(csvreader.line_num))
+
+#     # printing the field names
+#     print('Field names are:' + ', '.join(field for field in fields))
+
+#     #  printing first 5 rows
+#     for row in  :
+#         # parsing each column of a row
+#         for col in row:
+#             print("%10s"%col),
+#         print('\n')
+
+#     rawvals = [0]*numdims
+#     for i in range(numdims):
+#         val = -1
+#         val = rows[i]
+#         rawvals[i] = val
+
+#     dvalues = copy.copy(rawvals)
+#     print('dvalues is', dvalues)
+
+#     return {
+#         'productdims': dvalues,
+#     }
 
 def set_representativedims(numdims):
     print('entering set_representativedims')
