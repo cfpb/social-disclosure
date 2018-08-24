@@ -1,19 +1,3 @@
-Experiment for studying different disclosure designs
-#### CFPB Open Source Project Template Instructions
-
-4. Add any libraries, assets, or hard dependencies whose source code will be included
-   in the project's repository to the _Exceptions_ section in the [TERMS](TERMS.md).
-  - If no exceptions are needed, remove that section from TERMS.
-
-## Installation
-
-To install all of the template files, run the following script from the root of your project's directory:
-
-```
-bash -c "$(curl -s https://raw.githubusercontent.com/CFPB/development/master/open-source-template.sh)"
-```
-
-----
 
 # Social Disclosure
 
