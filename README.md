@@ -11,7 +11,7 @@ Other things to include:
 
 ## Dependencies
 oTree 1.2.5
-Django .8.8
+Django 1.8.8
 Python 3.6.5
 
 ## Installation
